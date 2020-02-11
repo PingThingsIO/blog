@@ -109,28 +109,22 @@ tree = make_tree()
 
 To traverse this tree, we will start at the root and then _recursively_ access children. There are two primary methods of traversing trees: depth-first and breadth-first. In our examples using this tree we will consider a method that is designed to apply a function to each node in the tree. The function should return `True` if the traversal should continue or `False` if the traversal should stop (`break`). The most common example is to conduct a search, where we want to find a node that meets a specific criteria, once that criteria is found, we can stop our search.
 
-## Depth-First
+### Depth-First
 
 Depth-first traversal starts at the root and goes as deep to the left of the tree as possible before traversing back up the tree and down again. The goal of depth-first traversal is to access the leaf nodes in the tree as quickly as possible given the structure described above. This kind of traversal is implemented as follows:
 
 ```python
-def depth_first(node, func):
-    # If the node has children, traverse down into the chidren
-    if len(node) > 0:
-        for child in node:
-            # If a node below this node returns False, stop iterating over children
-            if not depth_first(child, func):
-                return False
-
-    # Apply the function to the node
-    return func(node)
-
+def depth_first(root, func):
+    if len(root) > 0:
+        for child in root:
+            depth_first(child, func)
+    func(root)
 
 if __name__ == "__main__":
     depth_first(make_tree(), print)
 ```
 
-The `depth_first()` function takes a node (in our case the it will start with `Node` A) as well as a function as arguments. The function first checks if the node has any children. If it does, it iterates through the children and recursively calls the depth_first() until it reaches the bottom of the tree. Once it does it will call the function passed to it (`print()` in this example).
+The `depth_first()` function takes a node (in our case the it will start with `Node` A) as well as a function as arguments. The function first checks if the node has any children. If it does, it iterates through the children and recursively calls `depth_first()` until it reaches the bottom of the tree. Once it does it will call the function passed to it (`print()` in this example).
 
 The expected print output from depth_first is:
 
@@ -148,11 +142,11 @@ C
 A
 ```
 
-## Breadth-First
+### Breadth-First
 
-Breadth First Search (BFS) uses the opposite strategy as DFS, BFS starts at the root node and traverses all of the nodes are the present depth before moving on to the nodes at the next level.
+Breadth-first traversal uses the opposite strategy as depth-first, breadth-first starts at the root node and traverses all of the nodes are the present depth before moving on to the nodes at the next level.
 
-Here is an example of a function that executes BFS:
+Here is an example of a function that executes breadth-first:
 
 ```python
 def breadth_first(nodes, func):
@@ -162,12 +156,11 @@ def breadth_first(nodes, func):
 
     # Quit if no more nodes
     if len(nodes) == 0:
-        return True
+        return
 
     # Get the current node and apply the function, stopping if it returns False
     current = nodes[0]
-    if not func(current):
-        return False
+    func(current)
 
     # Append the children to the list of nodes to traverse and continue
     if len(current) > 0:
@@ -176,7 +169,7 @@ def breadth_first(nodes, func):
     return breadth_first(nodes[1:], func)
 ```
 
-The `breadth_first()` function takes a `Node` object and converts it to a list. We then check to make sure that `nodes` contains at least one element (if it doesn't, we have traversed the whole tree and can exit the function). We then print out the current values of the nodes, which are the nodes at the highest remaining level of the tree. Finally, we add the current nodes to our list of traversed nodes and pass the non-traversed nodes back into `breadth_first()`.
+The `breadth_first()` function takes a `Node` object and converts it to a list, `nodes`. It then checks to ensure that `nodes` contains at least one element. If it does not, the tree has already been traversed and we can exit the function. If it does, the `current` node is printed. Finally, if the node has children, they are added to the list of nodes to traverse and the function continues recursively by passing the non-traversed nodes into `breadth_first()`.
 
 The expected printed order of this function is
 
@@ -194,5 +187,29 @@ H
 I
 ```
 
-### Examples Using BTrDB
-TODO: Add example code here and brief explanation
+## Tree Traversal Queries in BTrDB
+These concepts can be applied when working with the BTrDB as well. In this example we will query the BTrDB and use a depth-first approach to find the aggregated point with the smallest minimum value.
+
+Here is an example of a depth-first approach with BTrDB:
+
+```python
+def find_smallest(stream, start, end, point_width=48, minimum=None):
+    
+    points, _ = zip(*stream.aligned_windows(start, end, point_width))
+    
+    #Assigning the minimum for the parent node
+    if not minimum:
+        minimum = points[0][1]
+
+    for point in points:
+        if point[1] == minimum:
+            if point_width > 30:
+                start = point[0]
+                end = point[0] + 2**point_width
+                find_smallest(stream, start, end, point_width=point_width -1, minimum=minimum)       
+            return point
+```
+
+The `find_smallest()` function starts by performing an `aligned_windows` query to retrieve our `StatPoints`, which are aggregated points from BTrDB at the provided `point_width`. The function starts at the parent node and records the minimum value for that `StatPoint`, and thus the entire tree underneath it. It then loops through each of the `StatPoints` and if it finds a child that has the same minimum value as the parent node, it records the start and end dates of the window, subtracts one from the `point_width` and calls `find_smallest()` again, where it conducts another `aligned_windows()` and starts the process over. This continues until it finds the most granular `StatPoint` within our max depth (`point_width` of 30 in this case) that shares the tree's overall minimum value to hone in on where the minimum value is located. 
+
+The key concept to understand is that `find_smallest()` only traverses to child nodes when their parents have the target minimum value while ignoring the others, effectively pruning away unnecessary data and conducting a memory efficient query.
