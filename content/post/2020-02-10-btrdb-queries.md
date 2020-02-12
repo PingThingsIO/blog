@@ -115,16 +115,20 @@ Depth-first traversal starts at the root and goes as deep to the left of the tre
 
 ```python
 def depth_first(root, func):
+    # If the node has children, traverse down into the chidren
     if len(root) > 0:
         for child in root:
             depth_first(child, func)
+
+    # Apply the function to the node
     func(root)
 
-if __name__ == "__main__":
-    depth_first(make_tree(), print)
+
+# Start depth-first traversal with the root of the tree
+depth_first(make_tree(), print)
 ```
 
-The `depth_first()` function takes a node (in our case the it will start with `Node` A) as well as a function as arguments. The function first checks if the node has any children. If it does, it iterates through the children and recursively calls `depth_first()` until it reaches the bottom of the tree. Once it does it will call the function passed to it (`print()` in this example).
+The `depth_first()` function recursively applies a function, `func` to each node in the tree starting with the lowest left node. It does this by first applying the function to any children the node has, by traversing the children using the depth first call. If the node does not have children (it is a leaf node) or the function has been applied to all children of the current node, the function is applied. This allows the function to quickly reach the bottom of the tree.
 
 The expected print output from depth_first is:
 
@@ -142,11 +146,13 @@ C
 A
 ```
 
+Depth-first traversal is commonly used because of its ease of implementation and the fact that it doesn't have book keeping requirements that might require increased memory usage. If the order of applying the function matters, e.g. if you're searching for a value and will stop when you find it, then it is important to consider the path the traversal takes. For example, in BTrDB where moving left to right across the tree means moving increasing time-order, depth-first traversal is the best way to find the _earliest_ example of something in time.
+
 ### Breadth-First
 
-Breadth-first traversal uses the opposite strategy as depth-first, breadth-first starts at the root node and traverses all of the nodes are the present depth before moving on to the nodes at the next level.
+Breadth-first traversal prioritizes interior nodes rather than leaf nodes by traversing each level of the tree at a time. Starting at the root node, a breadth-first traversal collects all the children of the current level, then iterates accross them, collecting all of the children at the level below. The collection mechanism requires some extra bookkeeping, though we are still able to implement breadth-first search recursively.
 
-Here is an example of a function that executes breadth-first:
+Here is an example of a function that executes breadth-first to similarly apply a function, `func` to each node in the tree:
 
 ```python
 def breadth_first(nodes, func):
@@ -167,9 +173,13 @@ def breadth_first(nodes, func):
         nodes += list(current)
 
     return breadth_first(nodes[1:], func)
+
+
+# Start breadth-first traversal with the root of the tree
+breadth_first(make_tree(), print)
 ```
 
-The `breadth_first()` function takes a `Node` object and converts it to a list, `nodes`. It then checks to ensure that `nodes` contains at least one element. If it does not, the tree has already been traversed and we can exit the function. If it does, the `current` node is printed. Finally, if the node has children, they are added to the list of nodes to traverse and the function continues recursively by passing the non-traversed nodes into `breadth_first()`.
+Instead of a single node object, the first argument to the recursive `breadth_first()` function is a list of nodes. To make passing the root node to the tree easier (the usually place where the traversal starts), the first step of the function is a check to convert a single node into a list of nodes. The recursive stop condition is to check if an empty list has been passed in. Otherwise, the first node in the list is fetched as the current node and the function applied to it. We then collect all of the children of the node and append them to the list, this ensures that the level below the current node is only started after the current level is completed and that traversal of the children in the level below happens in a left to right fashion. We can then continue to recurse on all of the children, omitting the current node from the next call.
 
 The expected printed order of this function is
 
@@ -187,29 +197,74 @@ H
 I
 ```
 
-## Tree Traversal Queries in BTrDB
-These concepts can be applied when working with the BTrDB as well. In this example we will query the BTrDB and use a depth-first approach to find the aggregated point with the smallest minimum value.
+While breadth-first traversal is a bit trickier to implement, it is important to consider the tree traversal pattern. If you're searching for a value that is in the middle of the tree or to the far right of the tree, then breadth-first traversal could be a far better strategy. In the case of BTrDB, breadth-first traversal allows you to easily traverse all time at different time granularities, collecting statistical information about the values below. If you're looking for the latest window or all windows that meet certain criteria, breadth-first traversal might be the better strategy.
 
-Here is an example of a depth-first approach with BTrDB:
+## Tree Traversal Queries in BTrDB
+
+BTrDB is a tree data structure that is not dissimilar from the tree structure we saw above. It's root and interior nodes are composed of `StatPoints` that describe a window of time with statistical aggregates and it's leaf nodes can be thought of as individual points. Although you cannot directly query the children of a stat point in the tree, a similar effect is possible using `windows` and `aligned_windows` queries where the `depth` and `pointwidth` arguments specify the level of the tree that is being traversed and the time range specified by the query can be directly fetched from the parent node (which is also true for `values` queries).
+
+To demonstrate this, let's take a toy example where we want to find the _time of the minimum value_ in a stream. We will explore both depth-first and breadth-first traversal strategies to see which is more efficient. To start, note that it is very fast to get the _minimum value_ of a stream:
 
 ```python
-def find_smallest(stream, start, end, point_width=48, minimum=None):
-    
-    points, _ = zip(*stream.aligned_windows(start, end, point_width))
-    
-    #Assigning the minimum for the parent node
-    if not minimum:
-        minimum = points[0][1]
+def get_minimum_value(stream, version=0):
+    # Get all of the stat points at the highest level of the tree as possible
+    windows = stream.aligned_windows(
+        start=btrdb.MINIMUM_TIME, end=btrdb.MAXIMUM_TIME, pointwidth=60, version=version
+    )
 
-    for point in points:
-        if point[1] == minimum:
-            if point_width > 30:
-                start = point[0]
-                end = point[0] + 2**point_width
-                find_smallest(stream, start, end, point_width=point_width -1, minimum=minimum)       
-            return point
+    # Unless you have decades of data, this will likely only be one stat point
+    values = [window.min for window, _ in windows]
+    return min(values)
 ```
 
-The `find_smallest()` function starts by performing an `aligned_windows` query to retrieve our `StatPoints`, which are aggregated points from BTrDB at the provided `point_width`. The function starts at the parent node and records the minimum value for that `StatPoint`, and thus the entire tree underneath it. It then loops through each of the `StatPoints` and if it finds a child that has the same minimum value as the parent node, it records the start and end dates of the window, subtracts one from the `point_width` and calls `find_smallest()` again, where it conducts another `aligned_windows()` and starts the process over. This continues until it finds the most granular `StatPoint` within our max depth (`point_width` of 30 in this case) that shares the tree's overall minimum value to hone in on where the minimum value is located. 
+This function collects the root node of the tree by performing an `aligned_windows` query at `pointwidth=60`, which should return only one stat point unless you have decades of data stored in the database (for completeness, we still take the minimum of all retunred windows if more than one is returned). Because a stat point is returned, we can directly fetch the minimum value from the point. However, what if we wanted to know _when_ that minimum value occurred?
+
+```python
+from btrdb.utils.general import pointwidth
+
+
+def find_points_dfs(
+    stream,
+    value,
+    start=btrdb.MINIMUM_TIME,
+    end=btrdb.MAXIMUM_TIME,
+    pw=48,
+    version=0
+):
+    # Ensure pw is a pointwidth object
+    pw = pointwidth(pw)
+
+    # Begin by collecting all stat points at the specified pointwidth
+    # Note that zip creates a list of windows and versions and we ignore the versions
+    windows, _ = zip(*stream.aligned_windows(start, end, pw, version))
+
+    # Traversing from left to right from the windows
+    for window in windows:
+        # Check to see if the value is in the window
+        if window.min <= value <= window.max:
+            # Get the time range of the current window
+            wstart = window.time
+            wend = window.time + pw.nanoseconds
+
+            if pw <= 30:
+                # If we are at a window length of a second, use values
+                points, _ = zip(*stream.values(wstart, wend, version))
+            else:
+                # Otherwise, traverse the stat point children of this node
+                points = find_points_dfs(stream, value, wstart, wend, pw-1, version)
+
+            # Yield all points to the calling function
+            for point in points:
+                if point.value == value:
+                    yield point
+
+
+# Find the time of of the smallest value in the stream
+value = get_minimum_value(stream)
+for point in find_points_dfs(stream, value):
+    print(point)
+```
+
+The `find_smallest()` function starts by performing an `aligned_windows` query to retrieve our `StatPoints`, which are aggregated points from BTrDB at the provided `point_width`. The function starts at the parent node and records the minimum value for that `StatPoint`, and thus the entire tree underneath it. It then loops through each of the `StatPoints` and if it finds a child that has the same minimum value as the parent node, it records the start and end dates of the window, subtracts one from the `point_width` and calls `find_smallest()` again, where it conducts another `aligned_windows()` and starts the process over. This continues until it finds the most granular `StatPoint` within our max depth (`point_width` of 30 in this case) that shares the tree's overall minimum value to hone in on where the minimum value is located.
 
 The key concept to understand is that `find_smallest()` only traverses to child nodes when their parents have the target minimum value while ignoring the others, effectively pruning away unnecessary data and conducting a memory efficient query.
