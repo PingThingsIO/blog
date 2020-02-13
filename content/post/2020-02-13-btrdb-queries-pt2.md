@@ -105,88 +105,89 @@ for point in find_points_dfs(stream, value):
     print(point)
 ```
 
-The `find_points_dfs()` function starts by performing an `aligned_windows` query to retrieve `StatPoints`, which are aggregated points from BTrDB at the provided pointwidth(`pw`). It then iterates through each retrieved window and checks to see if it contains the desired minimum value. If it does, it either conducts another `aligned_windows()` query to move down one level in the tree (`pw` - 1) and recursively calls `find_points()`, or performs a `values` query to return raw values which are iterated through in search of the minimum value. It is important to note that it is not necessary to traverse one pointwidth at a time, and in fact it may be a better strategy to skip multiple levels to reduce the latency by minimizing the number of calls to the database. This idea relates back to the trade-off between number of queries and amount of data returned from each query that we discussed earlier in this post. Once raw values are returned from the `values()` query, the function iterates through them and yields those that match the minimum value. 
+The `find_points_dfs()` function starts by performing an `aligned_windows` query to retrieve `StatPoints`, which are aggregated points from BTrDB at the provided pointwidth. It then iterates through each retrieved window and checks to see if it contains the desired minimum value. If it does, it either conducts another `aligned_windows()` query to move down one level in the tree (`pw` - 1) and recursively calls `find_points()`, or performs a `values()` query to return raw values which are iterated through in search of the minimum value. It is important to note that it is not necessary to traverse one pointwidth at a time, and in fact it may be a better strategy to skip multiple levels to reduce the latency by minimizing the number of calls to the database. This idea relates back to the trade-off between number of queries and amount of data returned from each query that we discussed earlier in this post. Once raw values are returned from the `values()` query, the function iterates through them and yields those that match the minimum value. 
 
 ### Breadth-First Example
 To compare the two approaches, we can look at an example of how we would solve the same problem of finding the time of our minimum value using a breadth-first approach:
 
 ```python
-def get_minimum_value(stream, version=0):
-    windows = stream.aligned_windows(
-        start=btrdb.MINIMUM_TIME, end=btrdb.MAXIMUM_TIME, pointwidth=60, version=version
-    )
+from collections import namedtuple
 
-    values = [window.min for window, _ in windows]
-    return min(values)
+#Instantiating our namedtuple that will contain our aggregated windows
+Window = namedtuple("Window", "time,min,max,pw")
 
-def return_points(points, value):
-    '''
-    iterates through a list of raw values and returns those that match the provided value
-    '''
-    for point in points:
-        if point.value == value:
-            yield point
-            
-def add_windows(start, end, pw, version, windows=None):
-    ''''
-    returns a list of tuples containing a StatPoint and a pointwidth
-    '''
-    points, _ = zip(*stream.aligned_windows(start, end, pw, version))
+def query_windows(stream, start, end=None, pw=48, version=0):
+    """
+    Returns a list of named tuples that contain agggregated windows to be added to our list of windows to traverse
+    """
+    if end is None:
+        end = start + pointwidth(pw).nanoseconds
     
-    return [(point, pw) for point in points]
+    points, _ = zip(*stream.aligned_windows(start, end, pointwidth(pw-1), version))
+            
+    return [
+        Window(point.time, point.min, point.max, pointwidth(pw-1)) 
+        for point in points
+    ]
 
 def find_points_bfs(
-    stream,
-    value,
-    start=btrdb.MINIMUM_TIME,
-    end=btrdb.MAXIMUM_TIME,
-    pw=48,
-    max_depth=30,
-    windows=[],
-    min_points=[],
+    stream, 
+    value, 
+    start=btrdb.MINIMUM_TIME, 
+    end=btrdb.MAXIMUM_TIME, 
+    pw=48, 
+    min_depth=30, 
     version=0
 ):
-    #Begin by populating our empty list of windows to traverse when the function first starts
-    #Each window is a tuple containing a StatPoint and a pointwidth
-    if len(windows) == 0:
-        windows = add_windows(start, end, pw, version, windows=windows)
-    
-    #Array to hold the results
-    min_points = []
-    
-    # Traversing windows from left to right
-    for window in windows: 
-        
-        #Because each window is a tuple, we want to specify which element is which
-        statpoint = window[0]
-        pw = pointwidth(window[1])
-      
-        if statpoint.min == value:
-            
-            # Get the time range of the current window
-            wstart = statpoint.time
-            wend = statpoint.time + pw.nanoseconds
-            
-            # If the pointwidth is greater 30, append the list of windows to traverse and continue
-            if pw > max_depth:
-                temp_windows = add_windows(
-                    start, end, pw-1, version, windows=windows
-                )
-                min_points.extend(
-                    find_points_bfs(stream, value, wstart, wend, pw, windows=temp_windows)
-                )
-                
-            # Otherwise, issue a values query and find points that match the minimum value
-            else:
-                points, _ = zip(*stream.values(wstart, wend, version))
-                min_points.extend(return_points(points, value))
-                
-    return min_points
+    # Set up the bfs recursive call 
+    windows = query_windows(stream, start, end, pw, version)
+    for point in _find_points_bfs_recursive(stream, value, windows, min_depth, version):
+        yield point
 
+def _find_points_bfs_recursive(
+    stream,
+    value,
+    windows,
+    min_depth,
+    version,
+):
+    """
+    This function implements recursive breadth-first traversal to find all points with the matching value.
+    """
+    # Stopping condition 1
+    if len(windows) == 0:
+        return
+
+    current = windows[0]
+    
+    if isinstance(current, Window):
+    
+        # Check if the value we're looking for is in the window
+        if current.min <= value <= current.max:
+            
+            # Append the child nodes to the traversal windows
+            if current.pw > min_depth:
+                windows.extend(query_windows(stream, current.time, pw=current.pw, version=version))
+            else:
+                # Append raw points to the windows if we've reached the minimum pontwidth
+                points, _ = zip(*stream.values(current.time, current.time+current.pw.nanoseconds, version))
+                windows.extend(points)
+        
+        # Recurse into the children, omitting current
+        for point in _find_points_bfs_recursive(stream, value, windows[1:], min_depth, version):
+            yield point
+    else:
+        # Stopping condition 2: every point from hereafter is going to be a raw point
+        for point in windows:
+            if point.value == value:
+                yield point
+
+# Using the function from the last example to get the minimum value in the stream
 value = get_minimum_value(stream)
 for point in find_points_bfs(stream, value):
     print(point)
 ```
+
 There are a couple of important differences between this function and the depth-first approach. The first is that once it identifies a window that contains the desired value, it issues another `aligned_windows()` query and adds the resulting windows to the _end_ of the list of windows to traverse before recursively calling `find_points_bfs()`, rather than immediately jumping down a level in the tree, as you would with depth-first. The second difference is that with this approach it is important to track the pointwidth of each window as the function progresses so we know when to issue a `values()` query and examine raw values once we reach our `max_depth` (poinwidth of 30 in this case). This is done by storing each window as a tuple that contains the statpoint and the pointwidth that was used to retreive that statpoint. The end of the function looks similar though; once it receives raw values it iterates through them and yields those that match our criteria.
 
 ## Concluson
