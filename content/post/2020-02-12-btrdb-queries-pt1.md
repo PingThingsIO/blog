@@ -1,5 +1,5 @@
 ---
-title: "Memory Efficient Btrdb Queries: Part 1"
+title: "Memory Efficient BTrDB Queries: Part 1"
 date: 2020-02-12T10:20:38-05:00
 description: "How to leverage the Berkeley Tree to create memory efficient queries"
 tags: ["btrdb", "python", "data structures", "algorithms", "analytics"]
