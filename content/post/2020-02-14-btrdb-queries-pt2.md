@@ -1,6 +1,6 @@
 ---
 title: "Memory Efficient Btrdb Queries: Part 2"
-date: 2020-02-13T10:20:39-05:00
+date: 2020-02-14T16:55:21-05:00
 description: "How to leverage the Berkeley Tree to create memory efficient queries"
 tags: ["btrdb", "python", "data structures", "algorithms", "analytics"]
 ---
@@ -105,7 +105,7 @@ for point in find_points_dfs(stream, value):
     print(point)
 ```
 
-The `find_points_dfs()` function starts by performing an `aligned_windows` query to retrieve `StatPoints`, which are aggregated points from BTrDB at the provided pointwidth. It then iterates through each retrieved window and checks to see if it contains the desired minimum value. If it does, it either conducts another `aligned_windows()` query to move down one level in the tree (`pw` - 1) and recursively calls `find_points()`, or performs a `values()` query to return raw values which are iterated through in search of the minimum value. It is important to note that it is not necessary to traverse one pointwidth at a time, and in fact it may be a better strategy to skip multiple levels to reduce the latency by minimizing the number of calls to the database. This idea relates back to the trade-off between number of queries and amount of data returned from each query that we discussed earlier in this post. Once raw values are returned from the `values()` query, the function iterates through them and yields those that match the minimum value. 
+The `find_points_dfs()` function starts by performing an `aligned_windows` query to retrieve `StatPoints`, which are aggregated points from BTrDB at the provided pointwidth. It then iterates through each retrieved window and checks to see if it contains the desired minimum value. If it does, it either conducts another `aligned_windows()` query to move down one level in the tree (`pw` - 1) and recursively calls `find_points()`, or performs a `values()` query to return raw values which are iterated through in search of the minimum value. It is important to note that it is not necessary to traverse one pointwidth at a time, and in fact it may be a better strategy to skip multiple levels to reduce the latency by minimizing the number of calls to the database. This idea relates back to the trade-off between number of queries and amount of data returned from each query that we discussed earlier in this post. Once raw values are returned from the `values()` query, the function iterates through them and yields those that match the minimum value.
 
 ### Breadth-First Example
 To compare the two approaches, we can look at an example of how we would solve the same problem of finding the time of our minimum value using a breadth-first approach:
@@ -122,24 +122,24 @@ def query_windows(stream, start, end=None, pw=48, version=0):
     """
     if end is None:
         end = start + pointwidth(pw).nanoseconds
-    
+
     points, _ = zip(*stream.aligned_windows(start, end, pointwidth(pw-1), version))
-            
+
     return [
-        Window(point.time, point.min, point.max, pointwidth(pw-1)) 
+        Window(point.time, point.min, point.max, pointwidth(pw-1))
         for point in points
     ]
 
 def find_points_bfs(
-    stream, 
-    value, 
-    start=btrdb.MINIMUM_TIME, 
-    end=btrdb.MAXIMUM_TIME, 
-    pw=48, 
-    min_depth=30, 
+    stream,
+    value,
+    start=btrdb.MINIMUM_TIME,
+    end=btrdb.MAXIMUM_TIME,
+    pw=48,
+    min_depth=30,
     version=0
 ):
-    # Set up the bfs recursive call 
+    # Set up the bfs recursive call
     windows = query_windows(stream, start, end, pw, version)
     for point in _find_points_bfs_recursive(stream, value, windows, min_depth, version):
         yield point
@@ -159,12 +159,12 @@ def _find_points_bfs_recursive(
         return
 
     current = windows[0]
-    
+
     if isinstance(current, Window):
-    
+
         # Check if the value we're looking for is in the window
         if current.min <= value <= current.max:
-            
+
             # Append the child nodes to the traversal windows
             if current.pw > min_depth:
                 windows.extend(query_windows(stream, current.time, pw=current.pw, version=version))
@@ -172,7 +172,7 @@ def _find_points_bfs_recursive(
                 # Append raw points to the windows if we've reached the minimum pontwidth
                 points, _ = zip(*stream.values(current.time, current.time+current.pw.nanoseconds, version))
                 windows.extend(points)
-        
+
         # Recurse into the children, omitting current
         for point in _find_points_bfs_recursive(stream, value, windows[1:], min_depth, version):
             yield point
@@ -191,6 +191,6 @@ for point in find_points_bfs(stream, value):
 There are a couple of important differences between this function and the depth-first approach. The first is that once it identifies a window that contains the desired value, it issues another `aligned_windows()` query and adds the resulting windows to the _end_ of the list of windows to traverse before recursively calling `find_points_bfs()`, rather than immediately jumping down a level in the tree, as you would with depth-first. The second difference is that with this approach it is important to track the pointwidth of each window as the function progresses so we know when to issue a `values()` query and examine raw values once we reach our `max_depth` (poinwidth of 30 in this case). This is done by storing each window as a tuple that contains the statpoint and the pointwidth that was used to retreive that statpoint. The end of the function looks similar though; once it receives raw values it iterates through them and yields those that match our criteria.
 
 ## Concluson
-The question of which approach is better largely depends on the problem that you are trying to solve. Depth-first is generally preferred when you are searching for a single value, as we were in our toy example, while breadth-first is more suitable for tasks such as finding all values below a certain threshold, or within a certain range of values. 
+The question of which approach is better largely depends on the problem that you are trying to solve. Depth-first is generally preferred when you are searching for a single value, as we were in our toy example, while breadth-first is more suitable for tasks such as finding all values below a certain threshold, or within a certain range of values.
 
-The key concept to understand is that both `find_points_dfs()` and `find_points_bfs()` only traverse to child nodes when their parents contain the target minimum value, while ignoring those that do not. This allows us to prune away unnecessary data and conduct memory efficient and better performing queries. 
+The key concept to understand is that both `find_points_dfs()` and `find_points_bfs()` only traverse to child nodes when their parents contain the target minimum value, while ignoring those that do not. This allows us to prune away unnecessary data and conduct memory efficient and better performing queries.

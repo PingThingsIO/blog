@@ -1,6 +1,6 @@
 ---
 title: "Memory Efficient Btrdb Queries: Part 1"
-date: 2020-02-13T10:20:38-05:00
+date: 2020-02-12T10:20:38-05:00
 description: "How to leverage the Berkeley Tree to create memory efficient queries"
 tags: ["btrdb", "python", "data structures", "algorithms", "analytics"]
 ---
@@ -167,6 +167,6 @@ I
 While breadth-first traversal is a bit trickier to implement, it is important to consider the tree traversal pattern. If you're searching for a value that is in the middle of the tree or to the far right of the tree, then breadth-first traversal could be a far better strategy. In the case of BTrDB, breadth-first traversal allows you to easily traverse all time at different time granularities, collecting statistical information about the values below. If you're looking for the latest window or all windows that meet certain criteria, breadth-first traversal might be the better strategy.
 
 ## Recap
-In those post we introduced tree data structures as well as the two primary approaches for traversing them. Please stay tuned for Part II, which will detail how to apply these concepts to the BTrDB. 
+In those post we introduced tree data structures as well as the two primary approaches for traversing them. Please stay tuned for Part II, which will detail how to apply these concepts to the BTrDB.
 
 
