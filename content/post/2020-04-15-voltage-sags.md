@@ -3,6 +3,7 @@ title: "Voltage Sag Safari: Exploring Voltage Sags with BTrDB"
 date: 2020-04-15T00:02:12-0700
 description: "How to discover voltage sags with efficient BTrDB queries"
 tags: ["btrdb", "python", "voltage sags", "algorithms", "analytics", "visualization"]
+author: "mohini"
 ---
 
 _Voltage sags_ are significant transient dips in the network voltage, lasting for less than a cycle to several seconds. They can be caused by faults, motor starts, equipment misoperation, or fast reclosing operation of circuit breakers and are relatively common events in distribution and transmission networks. Large, long, or frequent voltage sags can be problematic for utilities, as they can cause sensitive loads to turn off, motors to stall, or solar photovoltaic inverters to trip offline. Load trips can be a serious nuisance, with substantial economic losses particularly for commercial customers. Large numbers of simultaneous inverter trips could lead to broader system instability.
