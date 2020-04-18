@@ -1,9 +1,10 @@
-import React from "react"
+import { Layout } from "../components/Layout"
 import { Link, graphql } from "gatsby"
-import Layout from "../components/Layout"
+import { Navigation } from "../components/Navigation"
+import React from "react"
 
-const Articles = ({ data, location }) => {
-  const posts = data.allMarkdownRemark.edges.filter(item => !item.node.fields.slug.includes('/about') && !item.node.fields.slug.includes('/authors'))
+const Articles = ({ data, location, ...props }) => {
+  const posts = data.allMarkdownRemark.edges;
 
   return (
     <Layout location={location}>
@@ -28,6 +29,8 @@ const Articles = ({ data, location }) => {
           </div>
         )
       })}
+
+      <Navigation {...props.pageContext} />
     </Layout>
   )
 }
@@ -35,14 +38,18 @@ const Articles = ({ data, location }) => {
 export default Articles
 
 export const pageQuery = graphql`
-  query {
+  query($skip: Int, $limit: Int) {
     allMarkdownRemark(
+      filter: { fields: { category: { eq: "post" } } }
       sort: { fields: [frontmatter___date], order: DESC }
+      limit: $limit
+      skip: $skip
       ) {
       edges {
         node {
           excerpt
           fields {
+            category
             slug
           }
           frontmatter {
