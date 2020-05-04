@@ -44,8 +44,8 @@ const Homepage = ({ data, location, ...props }) => {
           }
 
           return (
-            <ArticleItem to={get(node, 'fields.slug')}>
-              <Excerpt key={index} {...data} />
+            <ArticleItem key={index} to={get(node, 'fields.slug')}>
+              <Excerpt {...data} />
             </ArticleItem>
           )
         })}

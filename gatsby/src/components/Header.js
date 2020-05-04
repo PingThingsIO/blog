@@ -1,5 +1,6 @@
 import { Navigation } from 'frontend-components'
-import { Link } from 'gatsby';
+import { get } from 'lodash'
+import { navigate } from '@reach/router'
 import BaseLogo from '../assets/images/logo.svg'
 import React from 'react';
 import styled from '@xstyled/styled-components'
@@ -30,15 +31,17 @@ const Wrapper = styled.div`
   height: 64px;
 `
 
-export const Header = () => {
+export const Header = location => {
+  const path = get(location, 'pathname')
+
   return (
     <Wrapper>
       <Container>
         <Logo />
 
         <NavigationContainer>
-          <Navigation label="About" />
-          <Navigation label="Articles" />
+          <Navigation isActive={path === '/about'} label="About" onClick={() => navigate('/about')} />
+          <Navigation isActive={path === '/articles'} label="Articles" onClick={() => navigate('/articles')} />
         </NavigationContainer>
       </Container>
     </Wrapper>
