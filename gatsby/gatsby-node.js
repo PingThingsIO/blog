@@ -116,3 +116,22 @@ exports.sourceNodes = ({ boundActionCreators, getNodes }) => {
       }
     })
 }
+
+exports.onCreateWebpackConfig = ({ actions, loaders, getConfig }) => {
+  const config = getConfig()
+
+  config.module.rules = [
+    ...config.module.rules.filter(
+      rule => String(rule.test) !== String(/\.jsx?$/)
+    ),
+    {
+      ...loaders.js(),
+      test: /\.js?$/,
+      exclude: modulePath =>
+        /node_modules/.test(modulePath) &&
+        !/node_modules\/(frontend-components)/.test(modulePath),
+    },
+  ]
+  // This will completely replace the webpack config with the modified object.
+  actions.replaceWebpackConfig(config)
+}

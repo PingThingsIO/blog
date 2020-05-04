@@ -2,6 +2,7 @@
 date: 2020-03-30T12:30:37-0400
 description: "A brief walkthrough of the Sunshine uPMU dataset"
 tags: ["btrdb", "timeseries", "python", "sunshine data", "upmu", "synchrophasor", "dataset"]
+author: sascha
 ---
 
 The “Sunshine” dataset comes from a distribution system in a sunny climate with significant solar PV generation. The data were collected with micro-PMUs during an early research deployment. There are gaps in the data which correspond to outages as the team was experimenting with different system configurations and wireless communications. When fully connected, each PMU reports data at 120 frames per second on twelve channels: three-phase voltage and current, giving root-mean-square magnitude and phase angle for each.
@@ -178,7 +179,7 @@ Now that we're in a pandas Series object, we can use our familiar `plot()` metho
 series.plot()
 ```
 
-![basic visualization](/media/post/2020-04-08-sunshine-data/sunshine-plot-1.png)
+![basic visualization](assets/images/post/sunshine-data/sunshine-plot-1.png)
 
 
 Of course, we can always pull in the `matplotlib` library to get more fine grained control over our visualization.
@@ -201,7 +202,7 @@ plt.title("Sunshine PMU3 L1MAG Voltage")
 plt.show()
 ```
 
-![improved visualization](/media/post/2020-04-08-sunshine-data/sunshine-plot-2.png)
+![improved visualization](assets/images/post/sunshine-data/sunshine-plot-2.png)
 
 ## Wrapping It Up
 

@@ -8,7 +8,7 @@ author: "sascha"
 
 While the connection between cardiology and power systems might not be immediately obvious, the study of medical electrocardiograms (ECG or EKG, from the original German) in fact shares important similarities with the study of grid data such as synchrophasors. In each case, we are looking at a time-series of voltage measurements. An EKG measures the voltage across the heart, which corresponds to the polarization of muscle tissue that makes it contract. Certain periodicities are expected -- for example, a regular heartbeat, or diurnal variations in load on the electric grid -- but within these basic rhythms lies a more subtle information-rich signature. In each case, we are interested in detailed variations on shorter time scales. For one, we look to infer things about the underlying structure of the system from the data -- for example, the size of heart chambers, or the impedance of a circuit. Also, we look for the distinction between healthy and unhealthy behaviors -- for example, whether a patient is having a heart attack, or whether there is a fault on the power system. With EKG and grid data side-by-side, the PredictiveGrid platform supports the exploration of algorithms that identify unique characteristics or anomalies in these time-series voltage data streams.
 
-![EKG Data](/media/post/2020-05-08-ekg-data/ekg.png)
+![EKG Data](/assets/images/post/ekg-data/ekg.png)
 
 The use of EKGs for medical diagnostics long predates the advent of computerized data analysis. Back in the day, a mechanical recorder would capture analog measurements with ink on paper. Getting any value from this information hinged on the ability of highly skilled professionals to draw meaningful conclusions from these traces. On the one hand, cardiologists applied first principles, such as an anatomical and physiological understanding of what should be driving the voltage signature. On the other hand, generations of clinicians trained by empirically observing and recording large numbers of EKGs. This ability has been significantly aided by modern technology, which allows for rapid comparison of much larger and more detailed data sets.
 
@@ -61,6 +61,3 @@ annotations, version = streams[0].annotations()
   "Infarction_date": "29-Sep-90"
 }
 ```
-
-
-

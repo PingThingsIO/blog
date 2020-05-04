@@ -1,35 +1,46 @@
+import { Navigation } from 'frontend-components'
 import { Link } from 'gatsby';
+import BaseLogo from '../assets/images/logo.svg'
 import React from 'react';
+import styled from '@xstyled/styled-components'
+
+const Container = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 1500px;
+
+  @media (max-width: 1500px) {
+    padding: 0 20px;
+    width: 100%;
+  }
+`
+
+const Logo = styled(BaseLogo)`
+  height: 20px;
+`
+
+const NavigationContainer = styled.div`
+  display: flex;
+`
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  height: 64px;
+`
 
 export const Header = () => {
   return (
-    <header className="site-header" style={{ height: '56px' }}>
-      <nav className="navbar navbar-expand-lg navbar-dark" data-navbar="sticky">
-        <div className="pl5 pb3 row">
-          <div className="col-8 col-lg-2 navbar-left" style={{ paddingLeft: 0 }}>
-            <button className="navbar-toggler" type="button">☰</button>
+    <Wrapper>
+      <Container>
+        <Logo />
 
-            <a className="navbar-brand" href="/">
-              <span style={{ fontSize: '20px', color: 'black' }}>NI4AI Blog</span>
-            </a>
-          </div>
-          <section className="col-lg-8 navbar-mobile">
-            <nav className="nav nav-navbar mx-auto">
-              <Link className="nav-link" to="/about">
-                About
-              </Link>
-
-              <Link className="nav-link" to="/articles">
-                Articles
-              </Link>
-
-              <a className="nav-link" href="https://ni4ai.org">
-                Project Home
-              </a>
-            </nav>
-          </section>
-        </div>
-      </nav>
-    </header>
+        <NavigationContainer>
+          <Navigation label="About" />
+          <Navigation label="Articles" />
+        </NavigationContainer>
+      </Container>
+    </Wrapper>
   )
 }

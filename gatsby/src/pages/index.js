@@ -1,34 +1,55 @@
-import { Layout } from "../components/Layout"
+import { Excerpt } from 'frontend-components'
+import { Layout } from "../templates/Layout"
 import { Link, graphql } from "gatsby"
+import { get } from 'lodash'
 import React from "react"
+import styled from '@xstyled/styled-components'
 
-const Homepage = ({ data, location }) => {
-  const posts = data.allMarkdownRemark.edges.filter(item => !item.node.fields.slug.includes('/about') && !item.node.fields.slug.includes('/authors'))
+const ArticleList = styled.div`
+  margin-top: 64px;
+  width: 1000px;
+`;
+
+const ArticleItem = styled(Link)`
+  margin-top: 64px;
+`
+
+const Homepage = ({ data, location, ...props }) => {
+  const [first, ...posts] = data.allMarkdownRemark.edges.filter(item => !item.node.fields.slug.includes('/about') && !item.node.fields.slug.includes('/authors'))
+
+  const getFirstImage = content => {
+    const [_, image] = /<img\b[^>]+?src\s*=\s*['"]?([^\s'"?#>]+)/g.exec(content) || [];
+
+    return image || ''
+  }
+
+  const firstPost = {
+    ...first.node.frontmatter,
+    image: getFirstImage(first.node.html),
+    subtitle: first.node.excerpt
+  }
 
   return (
     <Layout location={location}>
-      {posts.map(({ node }, index) => {
-        const title = node.frontmatter.title || node.fields.slug
+      <Excerpt {...firstPost} layout='extended' />
 
-        return (
-          <article className="bb b--black-10">
-            <div className="db pv4 ph3 ph0-l no-underline dark-gray">
-              <div className="flex flex-column flex-row-ns">
+      <ArticleList>
+        {posts.map(({ node }, index) => {
+          const image = getFirstImage(node.html);
 
-                <div className="blah w-100">
-                  <h1 className="f3 fw1 athelas mt0 lh-title">
-                    <Link to={node.fields.slug} className="color-inherit dim link">
-                      {title}
-                    </Link>
-                  </h1>
+          const data = {
+            ...node.frontmatter,
+            image,
+            subtitle: node.excerpt
+          }
 
-                  {index < 5 && <div className="f6 f5-l lh-copy nested-copy-line-height nested-links" dangerouslySetInnerHTML={{ __html: node.excerpt }} />}
-                </div>
-              </div>
-            </div>
-          </article>
-        );
-      })}
+          return (
+            <ArticleItem to={get(node, 'fields.slug')}>
+              <Excerpt key={index} {...data} />
+            </ArticleItem>
+          )
+        })}
+      </ArticleList>
     </Layout>
   )
 }
@@ -43,8 +64,13 @@ export const pageQuery = graphql`
       ) {
       edges {
         node {
+          html
           excerpt
           fields {
+            author {
+              avatar
+              name
+            }
             slug
           }
           frontmatter {
