@@ -53,6 +53,14 @@ module.exports = {
               classPrefix: "language-js",
             }
           },
+            {
+              resolve: 'gatsby-plugin-react-svg',
+              options: {
+                  rule: {
+                    include: /assets\/images/
+                  }
+              }
+          },
           `gatsby-remark-copy-linked-files`,
           `gatsby-remark-smartypants`,
         ],

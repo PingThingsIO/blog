@@ -1,4 +1,4 @@
-import  { Layout } from "../components/Layout"
+import  { Layout } from "../templates/Layout"
 import { graphql } from "gatsby"
 import React from "react"
 
