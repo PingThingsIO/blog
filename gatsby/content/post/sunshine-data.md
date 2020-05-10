@@ -1,6 +1,7 @@
 ---
 date: 2020-03-30T12:30:37-0400
 description: "A brief walkthrough of the Sunshine uPMU dataset"
+featuredImage: "/assets/images/post/sunshine-data/sunshine-plot-1.png"
 tags: ["btrdb", "timeseries", "python", "sunshine data", "upmu", "synchrophasor", "dataset"]
 author: sascha
 ---
@@ -179,7 +180,7 @@ Now that we're in a pandas Series object, we can use our familiar `plot()` metho
 series.plot()
 ```
 
-![basic visualization](assets/images/post/sunshine-data/sunshine-plot-1.png)
+![basic visualization](/assets/images/post/sunshine-data/sunshine-plot-1.png)
 
 
 Of course, we can always pull in the `matplotlib` library to get more fine grained control over our visualization.
@@ -202,7 +203,7 @@ plt.title("Sunshine PMU3 L1MAG Voltage")
 plt.show()
 ```
 
-![improved visualization](assets/images/post/sunshine-data/sunshine-plot-2.png)
+![improved visualization](/assets/images/post/sunshine-data/sunshine-plot-2.png)
 
 ## Wrapping It Up
 

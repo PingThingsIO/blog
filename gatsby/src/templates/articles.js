@@ -1,36 +1,49 @@
+import { Excerpt, Pagination } from 'frontend-components'
 import { Layout } from "./Layout"
-import { Link, graphql } from "gatsby"
-import { Navigation } from "../components/Navigation"
+import { Link, graphql, navigate } from "gatsby"
+import { get } from 'lodash'
 import React from "react"
+import styled from '@xstyled/styled-components'
 
-const Articles = ({ data, location, ...props }) => {
-  const posts = data.allMarkdownRemark.edges;
+const ArticleList = styled.div`
+  margin-top: 64px;
+  width: 1000px;
+`;
+
+const ArticleItem = styled(Link)`
+  margin-top: 64px;
+`
+
+const Articles = ({ data, location, pageContext }) => {
+  const posts = data.allMarkdownRemark.edges
+  const { currentPage, numPages } = pageContext
+
+  const onChangePage = item => {
+    const path = item === 1 ? '/articles' : `/articles/${item}`
+
+    navigate(path)
+  }
 
   return (
     <Layout location={location}>
-      <h1>Recent Articles</h1>
+      <ArticleList>
+        {posts.map(({ node }, index) => {
+          console.log(node);
+          const data = {
+            ...node.frontmatter,
+            image: node.frontmatter.featuredImage,
+            subtitle: node.excerpt
+          }
 
-      {posts.map(({ node }, index) => {
-        const title = node.frontmatter.title || node.fields.slug
+          return (
+            <ArticleItem key={index} to={get(node, 'fields.slug')}>
+              <Excerpt {...data} />
+            </ArticleItem>
+          )
+        })}
+      </ArticleList>
 
-        return (
-          <div className="mb3 mid-gray overflow-hidden">
-            <div className="f6">
-              {node.frontmatter.date}
-            </div>
-
-            <h1 className="f3 near-black">
-              <Link className="link black dim" to={node.fields.slug}>
-                {title}
-              </Link>
-            </h1>
-
-            <div className="nested-links f5 lh-copy nested-copy-line-height" dangerouslySetInnerHTML={{ __html: node.excerpt }} />
-          </div>
-        )
-      })}
-
-      <Navigation {...props.pageContext} />
+      <Pagination currentPage={currentPage} onClick={item => onChangePage(item)} totalPages={numPages} />
     </Layout>
   )
 }
@@ -54,6 +67,7 @@ export const pageQuery = graphql`
           }
           frontmatter {
             date(formatString: "MMMM DD, YYYY")
+            featuredImage
             title
             description
           }

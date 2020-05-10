@@ -1,4 +1,3 @@
-import { Footer } from '../components/Footer';
 import { Header } from '../components/Header';
 import { ThemeProvider, theme } from 'frontend-components';
 import React from "react"
@@ -9,12 +8,13 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-bottom: 48px;
 `;
 
-export const Layout = ({ children }) => {
+export const Layout = ({ children, location }) => {
   return (
     <ThemeProvider theme={theme}>
-      <Header />
+      <Header {...location} />
 
       <Content>
         {children}
