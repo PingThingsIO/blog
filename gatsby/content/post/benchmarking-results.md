@@ -1,7 +1,7 @@
 ---
-date: "2019-12-17T17:21:41.264251Z"
+date: '2019-12-17T17:21:41.264251Z'
 description: A brief report on recent benchmarking results across time series databases
-featuredImage: "/assets/images/post/benchmarking-results/FullParallelInsert.MPPS.png"
+featuredImage: '/assets/images/post/benchmarking-results/FullParallelInsert.MPPS.png'
 tags:
 - benchmarking
 title: Time Series Benchmarking Results

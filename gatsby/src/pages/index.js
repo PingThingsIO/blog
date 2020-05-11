@@ -34,8 +34,10 @@ const Homepage = ({ data, location, ...props }) => {
 
   return (
     <Layout location={location}>
-      <Excerpt {...firstPost} layout='extended' />
-      
+      <Link to={get(first, 'node.fields.slug')}>
+        <Excerpt {...firstPost} layout='extended' />
+      </Link>
+
       <ArticleList>
         {posts.map(({ node }, index) => {
           const data = {
