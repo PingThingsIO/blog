@@ -1,4 +1,9 @@
 module.exports = {
+  siteMetadata: {
+    title: 'NI4AI blog',
+    description: '',
+    siteUrl: 'https://gatsby-starter-blog-demo.netlify.com/',
+  },
   plugins: [
     {
       resolve: `gatsby-source-filesystem`,
