@@ -40,8 +40,8 @@ export const Header = location => {
         <Logo onClick={() => navigate('/')}/>
 
         <NavigationContainer>
-          <Navigation isActive={path === '/about'} label="About" onClick={() => navigate('/about')} />
-          <Navigation isActive={path === '/articles'} label="Articles" onClick={() => navigate('/articles')} />
+          <Navigation isActive={path.includes('/about')} label="About" onClick={() => navigate('/about')} />
+          <Navigation isActive={path.includes('/articles')} label="Articles" onClick={() => navigate('/articles')} />
         </NavigationContainer>
       </Container>
     </Wrapper>

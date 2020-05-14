@@ -37,7 +37,7 @@ const Article = ({ data, pageContext, location }) => {
       'img': ({ src }) => <Media source={src} />,
       'pre': ({ children }) => {
         const { className, children: childrenProps } = children[0].props;
-        const language = className.replace('language-', '');
+        const language = (className || '').replace('language-', '');
         
         return <Code language={language} snippet={childrenProps[0]} />
       } 
