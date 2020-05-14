@@ -1,72 +1,95 @@
-import { Layout } from "./Layout"
-import { Link, graphql } from "gatsby"
-import React from "react"
+import { Author, Caption, Code as BaseCode, Tag as BaseTag, Excerpt, Media } from 'frontend-components'
+import { Container as BaseContainer } from '../components/Container'
+import { Layout } from './Layout'
+import { get, map } from 'lodash'
+import { graphql } from 'gatsby'
+import React from 'react'
+import rehypeReact from 'rehype-react'
+import styled, { th } from '@xstyled/styled-components'
 
-const BlogPostTemplate = ({ data, pageContext, location }) => {
+const Code = styled(BaseCode)`
+  margin: 64px 0;
+`
+
+const Content = styled.div`
+  ${th('typography.body4')};
+`
+
+const Container = styled(BaseContainer)`
+  margin-top: 64px;
+`
+
+const Tag = styled(BaseTag)`
+  margin-right: 16px;
+`
+
+const Title = styled.h2`
+  margin: 64px 0;
+`
+
+const Article = ({ data, pageContext, location }) => {
   const post = data.markdownRemark
-  const { previous, next } = pageContext
 
+  const parseContent = new rehypeReact({
+    createElement: React.createElement,
+    components: {
+      'h2': ({ children }) => <Title>{children}</Title>,
+      'img': ({ src }) => <Media source={src} />,
+      'pre': ({ children }) => {
+        const { className, children: childrenProps } = children[0].props;
+        const language = className.replace('language-', '');
+        
+        return <Code language={language} snippet={childrenProps[0]} />
+      } 
+    }, 
+  }).Compiler
 
+  
+  const author = get(post, 'fields.author')
+  const avatar = {
+    image: get(author, 'avatar'),
+    size: '48'
+  };
+  
+  const excerpt = {
+    author: {
+      ...author,
+      avatar
+    },
+    date: get(post, 'frontmatter.date'),
+    title: get(post, 'frontmatter.title'),
+    subtitle: get(post, 'frontmatter.description')
+  }
+  
   return (
     <Layout location={location}>
-      <article>
-        <header>
-          <h1>
-            {post.frontmatter.title}
-          </h1>
-          <p>{post.frontmatter.date}</p>
-        </header>
-        <section dangerouslySetInnerHTML={{ __html: post.html }} />
-      </article>
+      <Container>
+        <Excerpt {...excerpt} />
+      </Container>
 
-      {post.fields.author && (
-        <div className="custom-section author-bio mid-gray">
-          <h3>About the author</h3>
+      <Caption image={get(post, 'frontmatter.featuredImage')} size='large' />
 
-          <div className="image-bio-section">
-            <div className="left">
-              <img src={post.fields.author.avatar} className="img" />
-            </div>
+      <Container>
+        <Content>{parseContent(post.htmlAst)}</Content>
 
-            <div className="right">
-              <h4>{post.fields.author.name}</h4>
+        {map(get(post, 'frontmatter.tags'), (tag, key) => <Tag key={key}label={tag} />)}
+      </Container>
 
-              <p>{post.fields.author.bio}</p>
-            </div>
-          </div>
-        </div>
-      )}
-
-      <nav>
-        <ul>
-          <li>
-            {previous && (
-              <Link to={previous.fields.slug} rel="prev">
-                ← {previous.frontmatter.title}
-              </Link>
-            )}
-          </li>
-          <li>
-            {next && (
-              <Link to={next.fields.slug} rel="next">
-                {next.frontmatter.title} →
-              </Link>
-            )}
-          </li>
-        </ul>
-      </nav>
+      <Container>
+        <Author author={{ ...author, avatar: { ...avatar, size: '76' }}} />
+      </Container>
     </Layout>
   )
 }
 
-export default BlogPostTemplate
+export default Article
 
 export const pageQuery = graphql`
   query($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
       id
       excerpt
-      html
+      htmlAst
       fields {
         author {
           avatar
@@ -77,6 +100,8 @@ export const pageQuery = graphql`
       frontmatter {
         date(formatString: "MMMM DD, YYYY")
         description
+        featuredImage
+        tags
         title
       }
     }

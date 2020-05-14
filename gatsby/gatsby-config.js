@@ -48,18 +48,12 @@ module.exports = {
             },
           },
           {
-            resolve: `gatsby-remark-prismjs`,
+            resolve: 'gatsby-plugin-react-svg',
             options: {
-              classPrefix: "language-js",
-            }
-          },
-            {
-              resolve: 'gatsby-plugin-react-svg',
-              options: {
-                  rule: {
-                    include: /assets\/images/
-                  }
+              rule: {
+                include: /assets\/images/
               }
+            }
           },
           `gatsby-remark-copy-linked-files`,
           `gatsby-remark-smartypants`,

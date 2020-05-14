@@ -1,13 +1,56 @@
-import  { Layout } from "../templates/Layout"
-import { graphql } from "gatsby"
-import React from "react"
+import { Container as BaseContainer } from '../components/Container'
+import { Media as BaseMedia } from 'frontend-components'
+import { Layout } from '../templates/Layout'
+import { graphql } from 'gatsby'
+import React from 'react'
+import rehypeReact from 'rehype-react'
+import styled, { th } from '@xstyled/styled-components'
+
+const Container = styled(BaseContainer)`
+  margin-top: 64px;
+`
+
+const Content = styled.div`
+  ${th('typography.body4')};
+  margin-top: 64px;
+`
+
+const Media = styled(BaseMedia)`
+  margin-top: 64px;
+`
+
+const Title = styled.p`
+  ${th('typography.display2')};
+  color: neutral8;
+`
+
+const Subtitle = styled.p`
+  ${th('typography.display2')};
+  color: neutral5;
+  margin: 10px 0;
+`
 
 const About = ({ data, location }) => {
-  const content = data.allMarkdownRemark.edges[0].node.html
+  const content = data.allMarkdownRemark.edges[0].node
+
+  const { description, title } = content.frontmatter
+
+  const parseContent = new rehypeReact({
+    createElement: React.createElement,
+    components: {
+      'img': ({ src }) => <Media source={src} />
+    }, 
+  }).Compiler
 
   return (
     <Layout location={location} showTitle={false}>
-      <div dangerouslySetInnerHTML={{ __html: content }} />
+      <Container>
+        <Title>{title}</Title> 
+
+        <Subtitle>{description}</Subtitle> 
+
+        <Content>{parseContent(content.htmlAst)}</Content>
+      </Container>
     </Layout>
   )
 }
@@ -19,6 +62,11 @@ export const pageQuery = graphql`
     allMarkdownRemark(filter: { fields: { category: { eq: "about" } } }) {
       edges {
         node {
+          htmlAst
+          frontmatter {
+            title
+            description
+          }
           html
         }
       }

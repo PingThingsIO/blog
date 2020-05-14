@@ -4,8 +4,8 @@ const path = require(`path`)
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
-  const article = require.resolve(`./src/templates/article.js`)
-  const articles = require.resolve(`./src/templates/articles.js`)
+  const article = require.resolve(`./src/templates/Article.js`)
+  const articles = require.resolve(`./src/templates/Articles.js`)
   const result = await graphql(
     `
       {
@@ -122,7 +122,7 @@ exports.onCreateWebpackConfig = ({ actions, loaders, getConfig }) => {
 
   config.module.rules = [
     ...config.module.rules.filter(
-      rule => String(rule.test) !== String(/\.jsx?$/)
+      rule => String(rule.test) !== String(/\.js?$/)
     ),
     {
       ...loaders.js(),
