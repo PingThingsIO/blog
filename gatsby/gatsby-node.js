@@ -4,8 +4,8 @@ const path = require(`path`)
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
-  const article = require.resolve(`./src/templates/Article.js`)
-  const articles = require.resolve(`./src/templates/Articles.js`)
+  const article = require.resolve(`./src/templates/article.js`)
+  const articles = require.resolve(`./src/templates/articles.js`)
   const result = await graphql(
     `
       {
@@ -77,7 +77,7 @@ exports.createPages = async ({ graphql, actions }) => {
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
 
-  if (node.internal.type === `MarkdownRemark`) {
+  if (node.internal.type === 'MarkdownRemark') {
     const value = createFilePath({ node, getNode })
 
     createNodeField({
@@ -94,27 +94,50 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   }
 }
 
-exports.sourceNodes = ({ boundActionCreators, getNodes }) => {
+exports.sourceNodes = ({ boundActionCreators, getNode, getNodes }) => {
   const { createNodeField } = boundActionCreators
 
-  getNodes()
-    .filter(node => node.internal.type === `MarkdownRemark`)
-    .forEach(node => {
-      if (node.frontmatter.author) {
-        const authorNode = getNodes().find(
-          item => item.internal.type === `MarkdownRemark` &&
-            item.frontmatter.id === node.frontmatter.author
-        )
+  const nodes = getNodes().filter(node => node.internal.type === 'MarkdownRemark');
 
-        if (authorNode) {
-          createNodeField({
-            node,
-            name: `author`,
-            value: authorNode.frontmatter
-          })
-        }
+  nodes.forEach(node => {
+    if (node.frontmatter.author) {
+      const authorNode = nodes.find(item => item.frontmatter.id && item.frontmatter.id === node.frontmatter.author)
+
+      if (authorNode) {
+        createNodeField({
+          node,
+          name: 'author',
+          value: authorNode.frontmatter
+        })
       }
-    })
+    }
+
+    if (node.frontmatter.tags) {
+      const relatedPosts = [];
+
+      nodes.forEach(item => {
+        if (item.id === node.id || !item.frontmatter.tags || relatedPosts.length === 2) {
+          return;
+        }
+
+        if (item.frontmatter.tags.find(tag => node.frontmatter.tags.includes(tag))) {
+          const authorNode = nodes.find(authorItem => authorItem.frontmatter.id && authorItem.frontmatter.id === item.frontmatter.author)
+
+          if (authorNode) {
+            item.author = authorNode.frontmatter;
+          }
+
+          relatedPosts.push(item);
+        }
+      })
+
+      createNodeField({
+        node,
+        name: 'relatedPosts',
+        value: relatedPosts
+      })
+    };
+  })
 }
 
 exports.onCreateWebpackConfig = ({ actions, loaders, getConfig }) => {

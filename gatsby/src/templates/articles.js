@@ -6,13 +6,22 @@ import React from "react"
 import styled from '@xstyled/styled-components'
 
 const ArticleList = styled.div`
-  margin-top: 64px;
-  width: 1000px;
+  margin: 64px 0;
+
+  @media (min-width: 1100px) {
+    width: 1000px;
+  }
 `;
 
 const ArticleItem = styled(Link)`
+  display: flex;
   margin-top: 64px;
-`
+  text-decoration: none;
+
+  @media (max-width: 1000px) {
+    margin-top: 128px;
+  }
+`;
 
 const Articles = ({ data, location, pageContext }) => {
   const posts = data.allMarkdownRemark.edges
@@ -28,7 +37,6 @@ const Articles = ({ data, location, pageContext }) => {
     <Layout location={location}>
       <ArticleList>
         {posts.map(({ node }, index) => {
-          console.log(node);
           const data = {
             ...node.frontmatter,
             image: node.frontmatter.featuredImage,

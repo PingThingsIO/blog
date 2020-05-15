@@ -8,7 +8,11 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-bottom: 48px;
+  padding: 0 5vw;
+
+  @media (min-width: 1000px) {
+    padding-bottom: 48px;
+  }
 `;
 
 export const Layout = ({ children, location }) => {

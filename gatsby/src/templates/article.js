@@ -19,6 +19,24 @@ const Container = styled(BaseContainer)`
   margin-top: 64px;
 `
 
+const RelatedPost = styled.div`
+  display: flex:
+  flex-direction: column;
+  flex: 1;
+
+  & + div {
+    margin-left: 32px;
+  }
+`
+
+const RelatedPostContainer = styled(Container)`
+  display: flex;
+`;
+
+const RelatedPostMedia = styled(Media)`
+  margin-bottom: 24px;
+`
+
 const Tag = styled(BaseTag)`
   margin-right: 16px;
 `
@@ -27,7 +45,7 @@ const Title = styled.h2`
   margin: 64px 0;
 `
 
-const Article = ({ data, pageContext, location }) => {
+const Article = ({ data, location }) => {
   const post = data.markdownRemark
 
   const parseContent = new rehypeReact({
@@ -75,6 +93,28 @@ const Article = ({ data, pageContext, location }) => {
         {map(get(post, 'frontmatter.tags'), (tag, key) => <Tag key={key}label={tag} />)}
       </Container>
 
+      <RelatedPostContainer>
+        {map(get(post, 'fields.relatedPosts'), relatedPost => {
+          const author = get(relatedPost, 'author.avatar', false);
+          let avatar;
+
+          if (author) {
+            avatar = {
+              image: get(relatedPost, 'author.avatar'),
+              size: '48'
+            }
+          }
+
+          return (
+            <RelatedPost>
+              <RelatedPostMedia source={get(relatedPost, 'frontmatter.featuredImage')} size='small' />
+
+              <Excerpt author={author} date={get(relatedPost, 'frontmatter.date')} title={get(relatedPost, 'frontmatter.title')} subtitle={get(relatedPost, 'frontmatter.description')} />
+            </RelatedPost>
+          )
+        })}
+      </RelatedPostContainer>
+
       <Container>
         <Author author={{ ...author, avatar: { ...avatar, size: '76' }}} />
       </Container>
@@ -95,6 +135,20 @@ export const pageQuery = graphql`
           avatar
           bio
           name
+        }
+        relatedPosts {
+          author {
+            avatar
+            bio
+            name
+          }
+          frontmatter {
+            date
+            description
+            featuredImage
+            tags
+            title
+          }
         }
       }
       frontmatter {

@@ -1,5 +1,5 @@
 ---
-date: "2019-10-25T12:00:00-00:00"
+date: '2019-10-25T12:00:00-00:00'
 description: Project Kickoff
 tags:
 - news

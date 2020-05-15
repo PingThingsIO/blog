@@ -6,7 +6,10 @@ import React from 'react'
 import rehypeReact from 'rehype-react'
 import styled, { th } from '@xstyled/styled-components'
 
-const Container = styled(BaseContainer)`
+const Container = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   margin-top: 64px;
 `
 

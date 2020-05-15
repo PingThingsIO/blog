@@ -1,5 +1,5 @@
 ---
-date: "2020-02-14T16:55:21-05:00"
+date: '2020-02-14T16:55:21-05:00'
 description: How to leverage the Berkeley Tree to create memory efficient queries
 tags:
 - btrdb

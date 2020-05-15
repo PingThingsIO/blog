@@ -6,13 +6,22 @@ import React from "react"
 import styled from '@xstyled/styled-components'
 
 const ArticleList = styled.div`
-  margin-top: 64px;
-  width: 1000px;
+  margin: 64px 0;
+
+  @media (min-width: 1100px) {
+    width: 1000px;
+  }
 `;
 
 const ArticleItem = styled(Link)`
+  display: flex;
   margin-top: 64px;
-`
+  text-decoration: none;
+
+  @media (max-width: 1000px) {
+    margin-top: 128px;
+  }
+`;
 
 const Homepage = ({ data, location, ...props }) => {
   const [first, ...posts] = data.allMarkdownRemark.edges.filter(item => !item.node.fields.slug.includes('/about') && !item.node.fields.slug.includes('/authors'))
@@ -25,8 +34,10 @@ const Homepage = ({ data, location, ...props }) => {
 
   return (
     <Layout location={location}>
-      <Excerpt {...firstPost} layout='extended' />
-      
+      <Link to={get(first, 'node.fields.slug')}>
+        <Excerpt {...firstPost} layout='extended' />
+      </Link>
+
       <ArticleList>
         {posts.map(({ node }, index) => {
           const data = {
