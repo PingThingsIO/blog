@@ -4,8 +4,9 @@ const path = require(`path`)
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
-  const article = require.resolve(`./src/templates/article.js`)
-  const articles = require.resolve(`./src/templates/articles.js`)
+  const homepage = require.resolve(`./src/templates/Homepage.js`)
+  const article = require.resolve(`./src/templates/Article.js`)
+  const articles = require.resolve(`./src/templates/Articles.js`)
   const result = await graphql(
     `
       {
@@ -44,6 +45,19 @@ exports.createPages = async ({ graphql, actions }) => {
 
     if (i > 0) {
       path = `${path}/${i + 1}`
+    }
+
+    if (i === 0) {
+      createPage({
+        path: '/',
+        component: homepage,
+        context: {
+          limit,
+          skip,
+          numPages,
+          currentPage: i + 1,
+        },
+      })
     }
 
     createPage({

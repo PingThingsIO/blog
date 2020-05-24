@@ -3,24 +3,27 @@ import { Layout } from "./Layout"
 import { Link, graphql, navigate } from "gatsby"
 import { get } from 'lodash'
 import React from "react"
-import styled from '@xstyled/styled-components'
+import styled, { css, up, th } from '@xstyled/styled-components'
 
 const ArticleList = styled.div`
-  margin: 64px 0;
+  margin-top: 20px;
 
-  @media (min-width: 1100px) {
-    width: 1000px;
-  }
+  ${up('lg',
+    css`
+      width: 1000px;
+    `
+  )}
 `;
 
 const ArticleItem = styled(Link)`
   display: flex;
-  margin-top: 64px;
+  margin-bottom: 64px;
   text-decoration: none;
+`;
 
-  @media (max-width: 1000px) {
-    margin-top: 128px;
-  }
+const Title = styled.h3`
+  ${th('typography.display3')}
+  margin-bottom: 64px;
 `;
 
 const Articles = ({ data, location, pageContext }) => {
@@ -36,9 +39,26 @@ const Articles = ({ data, location, pageContext }) => {
   return (
     <Layout location={location}>
       <ArticleList>
+        <Title>Recent Articles</Title>
+
         {posts.map(({ node }, index) => {
+          console.log(node);
+          const author = get(node, 'fields.author')
+          let avatar;
+
+          if (author) {
+           avatar = {
+             image: get(author, 'avatar'),
+             size: '48'
+           };
+          }
+
           const data = {
             ...node.frontmatter,
+            author: {
+              ...author,
+              avatar
+            },
             image: node.frontmatter.featuredImage,
             subtitle: node.excerpt
           }
@@ -70,6 +90,10 @@ export const pageQuery = graphql`
         node {
           excerpt
           fields {
+            author {
+              avatar
+              name
+            }
             category
             slug
           }

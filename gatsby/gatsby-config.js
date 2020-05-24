@@ -68,9 +68,11 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-plugin-s3`,
+      resolve: `gatsby-plugin-manifest`,
       options: {
-        bucketName: 'ni41ai-blog'
+        icon: `src/assets/images/favicon.png`,
+        name: `NI4AI Blog`,
+        short_name: `NI4AI Blog`,
       },
     },
     `gatsby-transformer-sharp`,
