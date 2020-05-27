@@ -1,4 +1,3 @@
-import { Container as BaseContainer } from '../components/Container'
 import { Media as BaseMedia } from 'frontend-components'
 import { Layout } from '../templates/Layout'
 import { graphql } from 'gatsby'
@@ -11,6 +10,7 @@ const Container = styled.div`
   flex: 1;
   flex-direction: column;
   margin-top: 64px;
+  padding: 0 5vw;
 `
 
 const Content = styled.div`

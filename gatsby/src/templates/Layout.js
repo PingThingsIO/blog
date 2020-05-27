@@ -1,28 +1,83 @@
-import { Header } from '../components/Header';
-import { ThemeProvider, theme } from 'frontend-components';
-import React from "react"
-import styled from '@xstyled/styled-components'
+import { NavigationItem } from '../components/NavigationItem'
+import { Header } from '../components/Header'
+import { ThemeProvider, theme } from 'frontend-components'
+import { menuItems } from '../lib/menu-items'
+import React, { useState } from "react"
+import styled, { createGlobalStyle, css, keyframes, up } from '@xstyled/styled-components'
 
-const Content = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0 5vw;
+const slideLeft = keyframes`
+  from {
+    transform: translateX(0);
+  }
 
-  @media (min-width: 1000px) {
-    padding-bottom: 48px;
+  to {
+    transform: translateX(25vw);
   }
 `;
 
+const Content = styled.div`
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 64px;
+
+  ${up('lg',
+    css`
+      padding-bottom: 48px;
+    `
+  )}
+`
+
+const GlobalStyle = createGlobalStyle`
+  body, html {
+    margin: 0;
+  }
+`
+
+const Menu = styled.div`
+  background-color: neutral1;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 25vw;
+  z-index: 1;
+
+  ${up('md',
+    css`
+      display: none
+    `
+  )}
+`
+
+const Wrapper = styled.div`
+  animation: 0.5s 1 forwards ${props => css`${props.isMenuVisible ? slideLeft : ''}`};
+  background-color: white;
+  position: relative;
+  z-index: 10;
+`;
+
 export const Layout = ({ children, location }) => {
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
+
   return (
     <ThemeProvider theme={theme}>
-      <Header {...location} />
+      <GlobalStyle />
 
-      <Content>
-        {children}
-      </Content>
+      <Menu isMenuVisible={isMenuVisible}>
+        {menuItems.map(menuItem => <NavigationItem {...menuItem} location={location} /> )}
+      </Menu>
+
+      <Wrapper isMenuVisible={isMenuVisible}>
+        <Header location={location} onToggleMenu={() => setIsMenuVisible(previousValue => !previousValue)} />
+
+        <Content>
+          {children}
+        </Content>
+      </Wrapper>
     </ThemeProvider>
   )
 }

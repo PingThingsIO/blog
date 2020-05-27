@@ -1,10 +1,13 @@
-import styled from '@xstyled/styled-components'
+import styled, { css, up } from '@xstyled/styled-components'
 
 export const Container = styled.div`
+  box-sizing: border-box;
   padding: 0 5vw;
-  width: 100vw;
+  width: 100%;
 
-  @media (min-width: 1100px) {
-    width: 1000px;
-  }
+  ${up('lg',
+    css`
+      width: 1000px;
+    `
+  )}
 `;
