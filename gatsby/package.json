@@ -23,7 +23,7 @@
     "start": "npm run develop"
   },
   "dependencies": {
-    "frontend-components": "git+ssh://git@github.com/PingThingsIO/frontend-components.git#1.0.0",
+    "frontend-components": "git+ssh://git@github.com/PingThingsIO/frontend-components.git#1.0.1",
     "gatsby": "2.20.24",
     "gatsby-image": "2.3.1",
     "gatsby-plugin-feed": "2.4.1",
