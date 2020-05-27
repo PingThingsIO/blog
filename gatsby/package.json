@@ -1,30 +1,26 @@
 {
-  "name": "gatsby-starter-blog",
+  "name": "pingthings-blog",
   "version": "0.1.0",
   "private": true,
-  "description": "A starter for a blog powered by Gatsby and Markdown",
-  "keywords": [
-    "gatsby"
-  ],
-  "homepage": "https://github.com/gatsbyjs/gatsby-starter-blog#readme",
+  "description": "The analytics blog for the ARPA-E National Infrastructure for Artificial Intelligence project.",
+  "homepage": "https://github.com/PingThingsIO/blog",
   "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
+    "url": "https://github.com/PingThingsIO/blog/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gatsbyjs/gatsby-starter-blog.git"
+    "url": "git+https://github.com/PingThingsIO/blog.git"
   },
   "license": "MIT",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "main": "n/a",
   "scripts": {
     "build": "gatsby build",
     "clean": "gatsby clean",
+    "deploy": "npx -n \"-r dotenv/config\" gatsby-plugin-s3 deploy",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "serve": "gatsby serve",
-    "start": "npm run develop",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+    "start": "npm run develop"
   },
   "dependencies": {
     "frontend-components": "git+ssh://git@github.com/PingThingsIO/frontend-components.git",
@@ -57,6 +53,7 @@
     "typography-theme-wordpress-2016": "0.16.19"
   },
   "devDependencies": {
+    "gatsby-plugin-s3": "0.3.3",
     "prettier": "2.0.4"
   }
 }
