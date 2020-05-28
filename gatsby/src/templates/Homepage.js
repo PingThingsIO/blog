@@ -29,6 +29,13 @@ const ArticleItem = styled(BaseLink)`
       margin-top: 128px;
     `
   )}
+
+  ${down('md',
+    css`
+      margin-top: 32px;
+      padding: 0 5vw;
+    `
+  )}
 `;
 
 const Homepage = ({ data, location, pageContext, ...props }) => {
@@ -41,22 +48,20 @@ const Homepage = ({ data, location, pageContext, ...props }) => {
     navigate(path)
   }
 
-  const author = get(first, 'node.fields.author')
-  let avatar;
+  let author = get(first, 'node.fields.author')
 
   if (author) {
-    avatar = {
+    const avatar = {
       image: get(author, 'avatar'),
       size: '48'
     };
-  }
+
+    author = { ...author, avatar }
+   }
 
   const firstPost = {
     ...first.node.frontmatter,
-    author: {
-      ...author,
-      avatar
-    },
+    author,
     image: first.node.frontmatter.featuredImage,
     subtitle: first.node.excerpt
   }
@@ -69,22 +74,20 @@ const Homepage = ({ data, location, pageContext, ...props }) => {
 
       <ArticleList>
         {posts.map(({ node }, index) => {
-           const author = get(node, 'fields.author')
-           let avatar;
+           let author = get(node, 'fields.author')
 
            if (author) {
-            avatar = {
+            const avatar = {
               image: get(author, 'avatar'),
               size: '48'
             };
+
+            author = { ...author, avatar }
            }
 
            const data = {
             ...node.frontmatter,
-            author: {
-              ...author,
-              avatar
-            },
+            author,
             image: node.frontmatter.featuredImage,
             subtitle: node.excerpt
           }

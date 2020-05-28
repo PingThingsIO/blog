@@ -5,7 +5,7 @@ import { get, map } from 'lodash'
 import { graphql } from 'gatsby'
 import React from 'react'
 import rehypeReact from 'rehype-react'
-import styled, { th } from '@xstyled/styled-components'
+import styled, { css, down, th } from '@xstyled/styled-components'
 
 const Caption = styled(BaseCaption)`
   margin-top: 64px;
@@ -32,17 +32,33 @@ const Media = styled(BaseMedia)`
 `;
 
 const RelatedPost = styled.div`
-  display: flex:
+  display: flex;
   flex-direction: column;
   flex: 1;
 
   & + div {
     margin-left: 32px;
   }
+
+  ${down('md',
+    css`
+      flex: none;
+
+      & + div {
+        margin-left: 0;
+      }
+    `
+  )}
 `
 
 const RelatedPostContainer = styled(Container)`
   display: flex;
+
+  ${down('md',
+    css`
+      flex-direction: column;
+    `
+  )}
 `;
 
 const RelatedPostMedia = styled(Media)`
@@ -68,8 +84,19 @@ const Subtitle = styled.p`
 
 const Title = styled.h1`
   ${th('typography.display4')};
+
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
   color: neutral8;
-  line-height: 0;
+  display: -webkit-box;
+  line-height: 54px;
+  overflow: hidden;
+
+  ${down('md',
+    css`
+      margin-top: 96px;
+    `
+  )}
 `;
 
 const Article = ({ data, location }) => {

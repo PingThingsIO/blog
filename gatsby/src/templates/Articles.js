@@ -3,7 +3,7 @@ import { Layout } from "./Layout"
 import { Link, graphql, navigate } from "gatsby"
 import { get } from 'lodash'
 import React from "react"
-import styled, { css, up, th } from '@xstyled/styled-components'
+import styled, { css, down, up, th } from '@xstyled/styled-components'
 
 const ArticleList = styled.div`
   margin-top: 20px;
@@ -11,6 +11,12 @@ const ArticleList = styled.div`
   ${up('lg',
     css`
       width: 1000px;
+    `
+  )}
+
+  ${down('md',
+    css`
+      padding: 0 2vw;
     `
   )}
 `;
@@ -24,6 +30,12 @@ const ArticleItem = styled(Link)`
 const Title = styled.h3`
   ${th('typography.display3')}
   margin-bottom: 64px;
+
+  ${down('md',
+    css`
+      margin-top: 96px;
+    `
+  )}
 `;
 
 const Articles = ({ data, location, pageContext }) => {
@@ -42,23 +54,20 @@ const Articles = ({ data, location, pageContext }) => {
         <Title>Recent Articles</Title>
 
         {posts.map(({ node }, index) => {
-          console.log(node);
-          const author = get(node, 'fields.author')
-          let avatar;
+          let author = get(node, 'fields.author')
 
           if (author) {
-           avatar = {
+           const avatar = {
              image: get(author, 'avatar'),
              size: '48'
            };
+
+           author = { ...author, avatar }
           }
 
           const data = {
             ...node.frontmatter,
-            author: {
-              ...author,
-              avatar
-            },
+            author,
             image: node.frontmatter.featuredImage,
             subtitle: node.excerpt
           }
