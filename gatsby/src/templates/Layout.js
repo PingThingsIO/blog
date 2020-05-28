@@ -21,7 +21,7 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-top: 64px;
+  padding: 64px 0;
 
   ${up('lg',
     css`

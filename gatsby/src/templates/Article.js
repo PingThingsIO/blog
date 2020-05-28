@@ -2,7 +2,7 @@ import { Author, Byline, Caption as BaseCaption, Code as BaseCode, Tag as BaseTa
 import { Container as BaseContainer } from '../components/Container'
 import { Layout } from './Layout'
 import { get, map } from 'lodash'
-import { graphql } from 'gatsby'
+import { graphql, navigate } from 'gatsby'
 import React from 'react'
 import rehypeReact from 'rehype-react'
 import styled, { css, down, th } from '@xstyled/styled-components'
@@ -17,6 +17,9 @@ const Code = styled(BaseCode)`
 
 const Content = styled.div`
   ${th('typography.body4')};
+  margin-bottom: 64px;
+
+  ${down('md', th('typography.body2'))}
 `
 
 const Container = styled(BaseContainer)`
@@ -24,19 +27,30 @@ const Container = styled(BaseContainer)`
 `
 
 const Header = styled.h2`
-  margin: 64px 0;
+  margin: 32px 0;
+`
+
+const HeaderContainer = styled(BaseContainer)`
+  margin-top: 64px;
+
+  ${down('md',
+    css`
+      margin-top: 128px;
+    `
+  )}
 `
 
 const Media = styled(BaseMedia)`
   margin: 64px 0;
 `;
 
-const RelatedPost = styled.div`
+const RelatedPost = styled.a`
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   flex: 1;
 
-  & + div {
+  & + a {
     margin-left: 32px;
   }
 
@@ -59,44 +73,35 @@ const RelatedPostContainer = styled(Container)`
       flex-direction: column;
     `
   )}
-`;
+`
 
 const RelatedPostMedia = styled(Media)`
   margin-bottom: 24px;
+  margin-top: 0;
 `
 
 const Tag = styled(BaseTag)`
   margin-right: 16px;
+  margin-top: 16px;
+`
+
+const TagContainer = styled.div`
+  margin-top: -16px;
 `
 
 const Subtitle = styled.p`
   ${th('typography.display1')};
-
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
   color: neutral5;
-  display: -webkit-box;
   line-height: 30px;
-  margin-bottom: 76px;
-  margin-top: 40px;
-  overflow: hidden;
+  margin-bottom: 32px;
+  margin-top: 12px;
 `
 
 const Title = styled.h1`
   ${th('typography.display4')};
-
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
   color: neutral8;
-  display: -webkit-box;
-  line-height: 54px;
-  overflow: hidden;
-
-  ${down('md',
-    css`
-      margin-top: 96px;
-    `
-  )}
+  line-height: 56px;
+  margin: 0;
 `;
 
 const Article = ({ data, location }) => {
@@ -117,51 +122,62 @@ const Article = ({ data, location }) => {
   }).Compiler
 
 
-  const author = get(post, 'fields.author')
-  const avatar = {
-    image: get(author, 'avatar'),
-    size: '48'
-  };
+  let author = get(post, 'fields.author')
 
-  const byline = {
-    author: {
+  if (author) {
+    const avatar = {
+      image: get(author, 'avatar'),
+      size: '48'
+    };
+
+    author = {
       ...author,
       avatar
-    },
+    }
+  }
+
+  const byline = {
+    author,
     date: get(post, 'frontmatter.date')
   }
 
   return (
     <Layout location={location}>
-      <Container>
+      <HeaderContainer>
         <Title>{get(post, 'frontmatter.title')}</Title>
         <Subtitle>{get(post, 'frontmatter.description')}</Subtitle>
 
         <Byline {...byline} />
-      </Container>
+      </HeaderContainer>
 
       <Caption image={get(post, 'frontmatter.featuredImage')} size='large' />
 
       <Container>
         <Content>{parseContent(post.htmlAst)}</Content>
 
-        {map(get(post, 'frontmatter.tags'), (tag, key) => <Tag key={key}label={tag} />)}
+        <TagContainer>
+          {map(get(post, 'frontmatter.tags'), (tag, key) => <Tag key={key}label={tag} />)}
+        </TagContainer>
       </Container>
 
       <RelatedPostContainer>
         {map(get(post, 'fields.relatedPosts'), relatedPost => {
-          const author = get(relatedPost, 'author.avatar', false);
-          let avatar;
+          let author = get(relatedPost, 'author.avatar', false);
 
           if (author) {
-            avatar = {
+            const avatar = {
               image: get(relatedPost, 'author.avatar'),
               size: '48'
+            }
+
+            author = {
+              ...author,
+              avatar
             }
           }
 
           return (
-            <RelatedPost>
+            <RelatedPost onClick={() => navigate(get(relatedPost, 'fields.slug'))}>
               <RelatedPostMedia source={get(relatedPost, 'frontmatter.featuredImage')} size='small' />
 
               <Excerpt author={author} date={get(relatedPost, 'frontmatter.date')} title={get(relatedPost, 'frontmatter.title')} subtitle={get(relatedPost, 'frontmatter.description')} />
@@ -171,7 +187,7 @@ const Article = ({ data, location }) => {
       </RelatedPostContainer>
 
       <Container>
-        <Author author={{ ...author, avatar: { ...avatar, size: '76' }}} />
+        <Author author={{ ...author, avatar: { ...get(author, 'avatar'), size: '76' }}} />
       </Container>
     </Layout>
   )
@@ -196,6 +212,9 @@ export const pageQuery = graphql`
             avatar
             bio
             name
+          }
+          fields {
+            slug
           }
           frontmatter {
             date
