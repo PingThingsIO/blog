@@ -52,6 +52,14 @@ const ArticleItem = styled(BaseLink)`
 `;
 
 const MainExcerpt = styled(BaseExcerpt)`
+  > :not(:first-child) {
+    padding: 64px 0 64px 24px;
+
+    > :not(:first-child) {
+      width: 100%;
+    }
+  }
+
   ${down('md',
     css`
       > :not(:first-child) {
