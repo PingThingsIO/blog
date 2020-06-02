@@ -178,7 +178,7 @@ const Article = ({ data, location }) => {
   }).Compiler
 
 
-  let author = get(post, 'fields.author')
+  let author = get(post, 'fields.author') || {};
 
   if (author) {
     const avatar = {

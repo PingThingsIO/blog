@@ -1,7 +1,7 @@
 ---
-author: chestnut
 date: '2020-02-12T10:20:38-05:00'
 description: How to leverage the Berkeley Tree to create memory efficient queries
+featuredImage: '/assets/images/post/default.jpg'
 tags:
 - btrdb
 - python
@@ -9,6 +9,7 @@ tags:
 - algorithms
 - analytics
 title: 'Memory Efficient BTrDB Queries: Part 1'
+author: chestnut
 ---
 
 [The Berkeley Tree Database (BTrDB)](http://btrdb.io/) provides effective distributed storage of dense scalar-valued telemetry data. It can store data with nanosecond precision, and it supports reading and writing more than 10 million points per second per node. As a result it is an excellent tool for analyzing historical high-frequency (usually 30-240 Hz) sensor readings that produce gigabytes of data an hour.
