@@ -4,7 +4,7 @@ module.exports = {
   siteMetadata: {
     title: 'NI4AI blog',
     description: '',
-    siteUrl: 'https://gatsby-starter-blog-demo.netlify.com/',
+    siteUrl: 'https://blog.ni4ai.org',
   },
   plugins: [
     {

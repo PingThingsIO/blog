@@ -5,6 +5,8 @@ tags:
 - news
 - survey
 title: Language Bindings Survey
+author: ben
+featuredImage: '/assets/images/post/default.jpg'
 ---
 
 We need your help to select the next languages to implement BTrDB bindings in! Please give us your feedback on this very short survey (it should take no more than 5 minutes):

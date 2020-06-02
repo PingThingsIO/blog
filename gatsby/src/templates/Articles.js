@@ -26,10 +26,14 @@ const ArticleItem = styled(Link)`
   margin-bottom: 32px;
   text-decoration: none;
 
-  ${down('md',
+  ${down('lg',
     css`
       padding: 0 24px;
+    `
+  )}
 
+  ${down('md',
+    css`
       > div {
         > :not(:first-child) {
           padding-bottom: 0;
@@ -43,7 +47,7 @@ const Title = styled.h3`
   ${th('typography.display3')}
   margin-bottom: 64px;
 
-  ${down('md',
+  ${down('lg',
     css`
       padding: 0 24px;
       margin: 32px 0;
