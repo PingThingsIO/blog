@@ -1,4 +1,5 @@
 ---
+author: chestnut
 date: '2020-02-12T10:20:38-05:00'
 description: How to leverage the Berkeley Tree to create memory efficient queries
 tags:
