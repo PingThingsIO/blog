@@ -17,6 +17,18 @@ const AuthorContainer = styled(BaseContainer)`
 
 const Caption = styled(BaseCaption)`
   margin-top: 64px;
+
+  p {
+    &:empty {
+      display: none;
+    }
+  }
+
+  ${down('md',
+    css`
+      margin-top: 32px;
+    `
+  )}
 `;
 
 const Code = styled(BaseCode)`

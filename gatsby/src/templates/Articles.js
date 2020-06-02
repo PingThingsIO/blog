@@ -23,12 +23,11 @@ const ArticleList = styled.div`
 
 const ArticleItem = styled(Link)`
   display: flex;
-  margin-bottom: 64px;
+  margin-bottom: 32px;
   text-decoration: none;
 
   ${down('md',
     css`
-      margin-top: 32px;
       padding: 0 24px;
 
       > div {

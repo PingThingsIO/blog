@@ -38,7 +38,8 @@ const ArticleItem = styled(BaseLink)`
 
   ${down('md',
     css`
-      margin-top: 32px;
+      margin-bottom: 32px;
+      margin-top: 0;
       padding: 0 24px;
 
       > div {
