@@ -10,7 +10,7 @@ const Container = styled.div`
   align-items: center;
   display: flex;
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 0 24px;
   width: 100%;
 
   @media (min-width: 1600px) {
@@ -31,9 +31,9 @@ const Logo = styled(BaseLogo)`
 
 const MenuIcon = styled.div`
   position: absolute;
-  left: 20px;
+  left: 24px;
   top: calc(50% - 6px);
-  width: 20px;
+  width: 24px;
 
   ${up('md',
     css`

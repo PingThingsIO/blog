@@ -1,4 +1,4 @@
-import styled, { css, up } from '@xstyled/styled-components'
+import styled, { css, down, up } from '@xstyled/styled-components'
 
 export const Container = styled.div`
   box-sizing: border-box;
@@ -8,6 +8,12 @@ export const Container = styled.div`
   ${up('lg',
     css`
       width: 1000px;
+    `
+  )}
+
+  ${down('md',
+    css`
+      padding: 0 24px;
     `
   )}
 `;

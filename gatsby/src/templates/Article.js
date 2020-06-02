@@ -7,12 +7,42 @@ import React from 'react'
 import rehypeReact from 'rehype-react'
 import styled, { css, down, th } from '@xstyled/styled-components'
 
+const AuthorContainer = styled(BaseContainer)`
+  ${down('md',
+    css`
+      display: none;
+    `
+  )}
+`
+
 const Caption = styled(BaseCaption)`
   margin-top: 64px;
+
+  p {
+    &:empty {
+      display: none;
+    }
+  }
+
+  ${down('md',
+    css`
+      margin-top: 32px;
+    `
+  )}
 `;
 
 const Code = styled(BaseCode)`
   margin: 64px 0;
+
+  ${down('md',
+    css`
+      margin: 32px 0;
+    `
+  )}
+
+  pre {
+    margin: 0;
+  }
 `
 
 const Content = styled.div`
@@ -24,6 +54,12 @@ const Content = styled.div`
 
 const Container = styled(BaseContainer)`
   margin-top: 64px;
+
+  ${down('md',
+    css`
+      margin-top: 32px;
+    `
+  )}
 `
 
 const Header = styled.h2`
@@ -35,13 +71,19 @@ const HeaderContainer = styled(BaseContainer)`
 
   ${down('md',
     css`
-      margin-top: 128px;
+      margin-top: 32px;
     `
   )}
 `
 
 const Media = styled(BaseMedia)`
   margin: 64px 0;
+
+  ${down('md',
+    css`
+      margin: 32px 0;
+    `
+  )}
 `;
 
 const RelatedPost = styled.a`
@@ -95,6 +137,13 @@ const Subtitle = styled.p`
   line-height: 30px;
   margin-bottom: 32px;
   margin-top: 12px;
+
+  ${down('md',
+    css`
+      font-size: 20px;
+      line-height: 28px;
+    `
+  )}
 `
 
 const Title = styled.h1`
@@ -102,6 +151,13 @@ const Title = styled.h1`
   color: neutral8;
   line-height: 56px;
   margin: 0;
+
+  ${down('md',
+    css`
+      font-size: 36px;
+      line-height: 44px;
+    `
+  )}
 `;
 
 const Article = ({ data, location }) => {
@@ -186,9 +242,9 @@ const Article = ({ data, location }) => {
         })}
       </RelatedPostContainer>
 
-      <Container>
+      <AuthorContainer>
         <Author author={{ ...author, avatar: { ...get(author, 'avatar'), size: '76' }}} />
-      </Container>
+      </AuthorContainer>
     </Layout>
   )
 }
