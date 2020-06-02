@@ -8,6 +8,8 @@ tags:
 - webinar
 - annoucement
 title: NI4AI Webinar
+author: pingthings
+featuredImage: '/assets/images/post/default.jpg'
 ---
 
 **This webinar is hosted by the North American Synchrophasor Initiative (NASPI)**

@@ -7,6 +7,8 @@ tags:
 - regression
 - general linear models
 title: Training General Linear Models with the PredictiveGrid™
+author: ben
+featuredImage: '/assets/images/post/default.jpg'
 ---
 
 ## Linear Modeling Process Overview

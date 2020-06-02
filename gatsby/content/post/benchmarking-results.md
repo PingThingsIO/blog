@@ -5,6 +5,7 @@ featuredImage: '/assets/images/post/benchmarking-results/FullParallelInsert.MPPS
 tags:
 - benchmarking
 title: Time Series Benchmarking Results
+author: michael
 ---
 
 There are many time series databases on the market at the moment and they each have their own strengths and weaknesses. Some of these characteristics are qualitative or can be quantified without an experiment for example "this database can scale out to a cluster" or "this database supports query X". Others need an experiment run on controlled hardware in order to quantify the differences.

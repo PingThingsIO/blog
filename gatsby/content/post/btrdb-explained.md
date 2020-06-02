@@ -8,6 +8,7 @@ tags:
 - analytics
 - database
 title: BTrDB Explained
+author: pingthings
 ---
 
 **BTrDB is a next-gen timeseries database for high-precision, dense telemetry.**

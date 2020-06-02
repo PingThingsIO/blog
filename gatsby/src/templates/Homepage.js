@@ -30,9 +30,10 @@ const ArticleItem = styled(BaseLink)`
   margin-bottom: 64px;
   text-decoration: none;
 
-  ${down('lg',
+  ${down('xl',
     css`
       margin-top: 96px;
+      padding: 0 24px;
     `
   )}
 
@@ -40,7 +41,6 @@ const ArticleItem = styled(BaseLink)`
     css`
       margin-bottom: 32px;
       margin-top: 0;
-      padding: 0 24px;
 
       > div {
         > :not(:first-child) {
