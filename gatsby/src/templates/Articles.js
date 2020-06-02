@@ -16,7 +16,7 @@ const ArticleList = styled.div`
 
   ${down('md',
     css`
-      padding: 0 2vw;
+      margin-top: 0;
     `
   )}
 `;
@@ -25,6 +25,19 @@ const ArticleItem = styled(Link)`
   display: flex;
   margin-bottom: 64px;
   text-decoration: none;
+
+  ${down('md',
+    css`
+      margin-top: 32px;
+      padding: 0 24px;
+
+      > div {
+        > :not(:first-child) {
+          padding-bottom: 0;
+        }
+      }
+    `
+  )}
 `;
 
 const Title = styled.h3`
@@ -33,7 +46,8 @@ const Title = styled.h3`
 
   ${down('md',
     css`
-      margin-top: 96px;
+      padding: 0 24px;
+      margin: 32px 0;
     `
   )}
 `;

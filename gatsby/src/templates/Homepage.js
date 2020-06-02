@@ -1,5 +1,5 @@
 import { Link as BaseLink, graphql, navigate } from "gatsby"
-import { Excerpt, Pagination } from 'frontend-components'
+import { Excerpt as BaseExcerpt, Pagination } from 'frontend-components'
 import { Layout } from "./Layout"
 import { get } from 'lodash'
 import React from "react"
@@ -17,6 +17,12 @@ const ArticleList = styled.div`
       width: 1000px;
     `
   )}
+
+  ${down('md',
+    css`
+      margin-top: 32px;
+    `
+  )}
 `;
 
 const ArticleItem = styled(BaseLink)`
@@ -26,14 +32,44 @@ const ArticleItem = styled(BaseLink)`
 
   ${down('lg',
     css`
-      margin-top: 128px;
+      margin-top: 96px;
     `
   )}
 
   ${down('md',
     css`
       margin-top: 32px;
-      padding: 0 5vw;
+      padding: 0 24px;
+
+      > div {
+        > :not(:first-child) {
+          padding-bottom: 0;
+        }
+      }
+    `
+  )}
+`;
+
+const MainExcerpt = styled(BaseExcerpt)`
+  ${down('md',
+    css`
+      > :not(:first-child) {
+        padding: 0 24px;
+
+        > :first-child {
+          p {
+            &:first-child {
+              font-size: 36px;
+              line-height: 44px;
+            }
+
+            &:not(:first-child) {
+              font-size: 20px;
+              line-height: 28px;
+            }
+          }
+        }
+      }
     `
   )}
 `;
@@ -69,7 +105,7 @@ const Homepage = ({ data, location, pageContext, ...props }) => {
   return (
     <Layout location={location}>
       <Link to={get(first, 'node.fields.slug')}>
-        <Excerpt {...firstPost} layout='extended' />
+        <MainExcerpt {...firstPost} layout='extended' />
       </Link>
 
       <ArticleList>
@@ -94,7 +130,7 @@ const Homepage = ({ data, location, pageContext, ...props }) => {
 
           return (
             <ArticleItem key={index} to={get(node, 'fields.slug')}>
-              <Excerpt {...data} />
+              <BaseExcerpt {...data} />
             </ArticleItem>
           )
         })}

@@ -3,7 +3,7 @@ import { Header } from '../components/Header'
 import { ThemeProvider, theme } from 'frontend-components'
 import { menuItems } from '../lib/menu-items'
 import React, { useState } from "react"
-import styled, { createGlobalStyle, css, down, keyframes, up } from '@xstyled/styled-components'
+import styled, { createGlobalStyle, css, keyframes, up } from '@xstyled/styled-components'
 
 const slideLeft = keyframes`
   from {
@@ -26,12 +26,6 @@ const Content = styled.div`
   ${up('lg',
     css`
       padding-bottom: 48px;
-    `
-  )}
-
-  ${down('md',
-    css`
-      padding: 0 2vw;
     `
   )}
 `
