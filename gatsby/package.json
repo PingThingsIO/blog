@@ -19,21 +19,25 @@
     "deploy": "npx -n \"-r dotenv/config\" gatsby-plugin-s3 deploy",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
+    "lint:css": "stylelint './src/**/*.js'",
     "serve": "gatsby serve",
     "start": "npm run develop"
   },
   "dependencies": {
-    "frontend-components": "git+ssh://git@github.com/PingThingsIO/frontend-components.git#1.0.1",
+    "babel-plugin-styled-components": "^1.10.7",
+    "babel-preset-gatsby": "^0.4.8",
+    "frontend-components": "git+ssh://git@github.com/PingThingsIO/frontend-components.git#jeff/webfontloader-fix-for-gatsby-7",
     "gatsby": "2.20.24",
     "gatsby-image": "2.3.1",
     "gatsby-plugin-feed": "2.4.1",
     "gatsby-plugin-google-analytics": "2.2.2",
     "gatsby-plugin-manifest": "2.3.3",
     "gatsby-plugin-offline": "3.1.2",
-    "gatsby-plugin-react-helmet": "3.2.1",
     "gatsby-plugin-react-svg": "^3.0.0",
     "gatsby-plugin-sharp": "^2.6.1",
+    "gatsby-plugin-styled-components": "^3.3.3",
     "gatsby-plugin-typography": "2.4.1",
+    "gatsby-plugin-web-font-loader": "^1.0.4",
     "gatsby-remark-copy-linked-files": "2.2.1",
     "gatsby-remark-images": "^3.3.1",
     "gatsby-remark-responsive-iframe": "2.3.1",
@@ -44,9 +48,9 @@
     "prismjs": "1.19.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "react-helmet": "5.2.1",
     "react-typography": "0.16.19",
     "rehype-react": "^5.0.1",
+    "styled-components": "5.1.0",
     "typeface-merriweather": "0.0.72",
     "typeface-montserrat": "0.0.75",
     "typography": "0.16.19",
@@ -54,6 +58,10 @@
   },
   "devDependencies": {
     "gatsby-plugin-s3": "0.3.3",
-    "prettier": "2.0.4"
+    "prettier": "2.0.4",
+    "stylelint": "^13.6.0",
+    "stylelint-config-recommended": "^3.0.0",
+    "stylelint-config-styled-components": "^0.1.1",
+    "stylelint-processor-styled-components": "^1.10.0"
   }
 }

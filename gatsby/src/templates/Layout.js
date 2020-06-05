@@ -48,7 +48,7 @@ const Menu = styled.div`
 
   ${up('md',
     css`
-      display: none
+      display: none;
     `
   )}
 `
