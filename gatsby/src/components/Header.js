@@ -14,7 +14,7 @@ const Container = styled.div`
   width: 100%;
 
   @media (min-width: 1600px) {
-    width: 1500px
+    width: 1500px;
   }
 
   ${down('md',
@@ -37,7 +37,7 @@ const MenuIcon = styled.div`
 
   ${up('md',
     css`
-      display: none
+      display: none;
     `
   )}
 `;

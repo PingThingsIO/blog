@@ -7,6 +7,21 @@ module.exports = {
     siteUrl: 'https://blog.ni4ai.org',
   },
   plugins: [
+    `gatsby-plugin-styled-components`,
+    {
+      resolve: 'gatsby-plugin-web-font-loader',
+      options: {
+        google: {
+          families: ['Inter']
+        }
+      }
+    },
+    {
+      resolve: `gatsby-plugin-s3`,
+      options: {
+          bucketName: 'dummy-blog'
+      }
+    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -77,7 +92,6 @@ module.exports = {
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
-    `gatsby-plugin-feed`,
-
+    `gatsby-plugin-feed`
   ],
 }

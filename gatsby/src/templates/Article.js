@@ -100,6 +100,10 @@ const RelatedPost = styled.a`
     css`
       flex: none;
 
+      & + a {
+        margin-left: 0;
+      }
+
       & + div {
         margin-left: 0;
       }
