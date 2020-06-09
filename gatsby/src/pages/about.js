@@ -10,7 +10,6 @@ const Container = styled.div`
   flex: 1;
   flex-direction: column;
   margin-top: 64px;
-  padding: 0 5vw;
 `
 
 const Content = styled.div`
@@ -42,15 +41,15 @@ const About = ({ data, location }) => {
     createElement: React.createElement,
     components: {
       'img': ({ src }) => <Media source={src} />
-    }, 
+    },
   }).Compiler
 
   return (
     <Layout location={location} showTitle={false}>
       <Container>
-        <Title>{title}</Title> 
+        <Title>{title}</Title>
 
-        <Subtitle>{description}</Subtitle> 
+        <Subtitle>{description}</Subtitle>
 
         <Content>{parseContent(content.htmlAst)}</Content>
       </Container>
