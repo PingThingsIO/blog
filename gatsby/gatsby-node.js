@@ -1,13 +1,17 @@
 const { createFilePath } = require(`gatsby-source-filesystem`)
 const moment = require('moment')
+const _ = require('lodash')
+
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
-  const homepage = require.resolve(`./src/templates/Homepage.js`)
   const article = require.resolve(`./src/templates/Article.js`)
   const articles = require.resolve(`./src/templates/Articles.js`)
-  const result = await graphql(
+  const homepage = require.resolve(`./src/templates/Homepage.js`)
+  const tagTemplate = require.resolve(`./src/templates/Tags.js`)
+
+  let result = await graphql(
     `
       {
         allMarkdownRemark(
@@ -83,6 +87,45 @@ exports.createPages = async ({ graphql, actions }) => {
         slug: post.node.fields.slug,
         previous,
         next,
+      },
+    })
+  })
+
+
+  result = await graphql(`
+  {
+    postsRemark: allMarkdownRemark(
+      sort: { order: DESC, fields: [frontmatter___date] }
+      limit: 2000
+    ) {
+      edges {
+        node {
+          fields {
+            slug
+          }
+          frontmatter {
+            tags
+          }
+        }
+      }
+    }
+    tagsGroup: allMarkdownRemark(limit: 2000) {
+      group(field: frontmatter___tags) {
+        fieldValue
+      }
+    }
+  }
+`)
+
+  // Extract tag data from query
+  const tags = result.data.tagsGroup.group
+  // Make tag pages
+  tags.forEach(tag => {
+    createPage({
+      path: `/tags/${_.kebabCase(tag.fieldValue)}/`,
+      component: tagTemplate,
+      context: {
+        tag: tag.fieldValue,
       },
     })
   })

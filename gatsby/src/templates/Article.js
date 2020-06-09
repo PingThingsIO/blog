@@ -1,11 +1,13 @@
-import { Author, Byline, Caption as BaseCaption, Code as BaseCode, Tag as BaseTag, Excerpt, Media as BaseMedia } from 'frontend-components'
-import { Container as BaseContainer } from '../components/Container'
-import { Layout } from './Layout'
-import { get, map } from 'lodash'
-import { graphql, navigate } from 'gatsby'
 import React from 'react'
+
+import { Author, Byline, Caption as BaseCaption, Code as BaseCode, Tag as BaseTag, Excerpt, Media as BaseMedia } from 'frontend-components'
+import { get, map } from 'lodash'
+import { Link, graphql, navigate } from 'gatsby'
 import rehypeReact from 'rehype-react'
 import styled, { css, down, th } from '@xstyled/styled-components'
+
+import { Container as BaseContainer } from '../components/Container'
+import { Layout } from './Layout'
 
 const AuthorContainer = styled(BaseContainer)`
   ${down('md',
@@ -216,7 +218,11 @@ const Article = ({ data, location }) => {
         <Content>{parseContent(post.htmlAst)}</Content>
 
         <TagContainer>
-          {map(get(post, 'frontmatter.tags'), (tag, key) => <Tag key={key}label={tag} />)}
+          {map(get(post, 'frontmatter.tags'), (tag, key) => (
+            <Link to={`tags/${tag}`}>
+              <Tag key={key}label={tag} />
+            </Link>
+          ))}
         </TagContainer>
       </Container>
 
@@ -237,7 +243,10 @@ const Article = ({ data, location }) => {
           }
 
           return (
-            <RelatedPost key={get(relatedPost, 'fields.slug')} onClick={() => navigate(get(relatedPost, 'fields.slug'))}>
+            <RelatedPost
+              key={get(relatedPost, 'fields.slug')}
+              onClick={() => navigate(get(relatedPost, 'fields.slug'))}
+            >
               <RelatedPostMedia source={get(relatedPost, 'frontmatter.featuredImage')} size='small' />
 
               <Excerpt
