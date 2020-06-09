@@ -53,7 +53,11 @@ const ArticleItem = styled(BaseLink)`
 
 const MainExcerpt = styled(BaseExcerpt)`
   > :not(:first-child) {
-    padding: 64px 0 64px 24px;
+    padding: 64px 24px;
+
+    > :first-child {
+      text-align: center;
+    }
 
     > :not(:first-child) {
       width: 100%;
@@ -66,6 +70,8 @@ const MainExcerpt = styled(BaseExcerpt)`
         padding: 0 24px;
 
         > :first-child {
+          text-align: left;
+
           p {
             &:first-child {
               font-size: 36px;
