@@ -101,8 +101,6 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       value = `/post${value}`
     }
 
-    console.log({ value })
-
     createNodeField({
       name: 'category',
       node,

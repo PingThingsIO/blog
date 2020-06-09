@@ -237,10 +237,15 @@ const Article = ({ data, location }) => {
           }
 
           return (
-            <RelatedPost onClick={() => navigate(get(relatedPost, 'fields.slug'))}>
+            <RelatedPost key={get(relatedPost, 'fields.slug')} onClick={() => navigate(get(relatedPost, 'fields.slug'))}>
               <RelatedPostMedia source={get(relatedPost, 'frontmatter.featuredImage')} size='small' />
 
-              <Excerpt author={author} date={get(relatedPost, 'frontmatter.date')} title={get(relatedPost, 'frontmatter.title')} subtitle={get(relatedPost, 'frontmatter.description')} />
+              <Excerpt
+                author={author}
+                date={get(relatedPost, 'frontmatter.date')}
+                title={get(relatedPost, 'frontmatter.title')}
+                subtitle={get(relatedPost, 'frontmatter.description')}
+              />
             </RelatedPost>
           )
         })}
@@ -265,6 +270,7 @@ export const pageQuery = graphql`
         author {
           avatar
           bio
+          email
           name
         }
         relatedPosts {
