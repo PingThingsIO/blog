@@ -2,10 +2,10 @@ import { Excerpt, Pagination } from 'frontend-components'
 import { Layout } from "./Layout"
 import { Link, graphql, navigate } from "gatsby"
 import { get } from 'lodash'
-import React from "react"
+import React, { Fragment } from "react"
 import styled, { css, down, up, th } from '@xstyled/styled-components'
 
-const ArticleList = styled.div`
+export const ArticleList = styled.div`
   margin-top: 20px;
 
   ${up('lg',
@@ -43,7 +43,7 @@ const ArticleItem = styled(Link)`
   )}
 `;
 
-const Title = styled.h3`
+export const Title = styled.h3`
   ${th('typography.display3')}
   margin-bottom: 64px;
 
@@ -54,6 +54,36 @@ const Title = styled.h3`
     `
   )}
 `;
+
+export const Posts = ({ posts }) => (
+  <Fragment>
+    {posts.map(({ node }, index) => {
+      let author = get(node, 'fields.author')
+
+      if (author) {
+        const avatar = {
+          image: get(author, 'avatar'),
+          size: '48'
+        };
+
+        author = { ...author, avatar }
+      }
+
+      const data = {
+        ...node.frontmatter,
+        author,
+        image: node.frontmatter.featuredImage,
+        subtitle: node.excerpt
+      }
+
+      return (
+        <ArticleItem key={index} to={get(node, 'fields.slug')}>
+          <Excerpt {...data} />
+        </ArticleItem>
+      )
+    })}
+  </Fragment>
+)
 
 const Articles = ({ data, location, pageContext }) => {
   const posts = data.allMarkdownRemark.edges
@@ -69,34 +99,8 @@ const Articles = ({ data, location, pageContext }) => {
     <Layout location={location}>
       <ArticleList>
         <Title>Recent Articles</Title>
-
-        {posts.map(({ node }, index) => {
-          let author = get(node, 'fields.author')
-
-          if (author) {
-           const avatar = {
-             image: get(author, 'avatar'),
-             size: '48'
-           };
-
-           author = { ...author, avatar }
-          }
-
-          const data = {
-            ...node.frontmatter,
-            author,
-            image: node.frontmatter.featuredImage,
-            subtitle: node.excerpt
-          }
-
-          return (
-            <ArticleItem key={index} to={get(node, 'fields.slug')}>
-              <Excerpt {...data} />
-            </ArticleItem>
-          )
-        })}
+        <Posts posts={posts} />
       </ArticleList>
-
       <Pagination currentPage={currentPage} onClick={item => onChangePage(item)} totalPages={numPages} />
     </Layout>
   )
