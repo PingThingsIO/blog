@@ -1,5 +1,5 @@
 const { createFilePath } = require(`gatsby-source-filesystem`)
-const path = require(`path`)
+const moment = require('moment')
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
@@ -92,7 +92,16 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
 
   if (node.internal.type === 'MarkdownRemark') {
-    const value = createFilePath({ node, getNode })
+    let value = `${createFilePath({ node, getNode })}`
+
+    if (node.frontmatter && node.frontmatter.date) {
+      const dateValue = moment(node.frontmatter.date).format('YYYY-MM-DD')
+      value = `/post/${dateValue}-${value.replace(/\//g, "")}/`
+    } else {
+      value = `/post${value}`
+    }
+
+    console.log({ value })
 
     createNodeField({
       name: 'category',
