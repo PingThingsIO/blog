@@ -51,7 +51,27 @@ const Content = styled.div`
   ${th('typography.body4')};
   margin-bottom: 64px;
 
-  ${down('md', th('typography.body2'))}
+  > div {
+    p + p,
+    table + p {
+      margin-top: 28px;
+    }
+  }
+
+  ${down('md',
+    th('typography.body2')
+  )}
+
+  ${down('md',
+    css`
+      > div {
+        p + p,
+        table + p {
+          margin-top: 20px;
+        }
+      }
+    `
+  )}
 `
 
 const Container = styled(BaseContainer)`
