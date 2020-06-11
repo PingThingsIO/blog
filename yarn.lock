@@ -6683,9 +6683,9 @@ from2@^2.1.0, from2@^2.1.1:
     inherits "^2.0.1"
     readable-stream "^2.0.0"
 
-"frontend-components@git+ssh://git@github.com/PingThingsIO/frontend-components.git#1.0.10":
-  version "1.0.10"
-  resolved "git+ssh://git@github.com/PingThingsIO/frontend-components.git#ce0d790d10205b06f5e6b2f155d0bd63e5a923e0"
+"frontend-components@git+ssh://git@github.com/PingThingsIO/frontend-components.git#1.0.11":
+  version "1.0.11"
+  resolved "git+ssh://git@github.com/PingThingsIO/frontend-components.git#a58b159d1969ca5d0187e9f4fe87792b9e769992"
   dependencies:
     "@xstyled/styled-components" "1.17.0"
     prop-types "15.7.2"
