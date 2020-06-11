@@ -4,6 +4,7 @@ import { ThemeProvider, theme } from 'frontend-components'
 import { menuItems } from '../lib/menu-items'
 import React, { useState } from "react"
 import styled, { createGlobalStyle, css, keyframes, up } from '@xstyled/styled-components'
+import { Helmet } from 'react-helmet'
 
 const slideLeft = keyframes`
   from {
@@ -65,6 +66,20 @@ export const Layout = ({ children, location }) => {
 
   return (
     <ThemeProvider theme={theme}>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <meta
+          name="description"
+          content="PingThings' PredictiveGrid™ platform offers a time series database purpose built for industrial scale deployments of high rate sensors (1Khz+). It includes all the tools necessary to ingest, store, visualize, analyze, and perform machine learning or deep learning on your data."
+        />
+        <meta
+          name="keywords"
+          content="time series, TSDB, data analysis, machine learning, deep learning, AI, IoT, energy, DOE"
+        />
+        <title>NI4AI - National Infrastructure for AI on the Electric Grid</title>
+        <link rel="canonical" href="https://blog.ni4ai.org/" />
+      </Helmet>
+
       <GlobalStyle />
 
       <Menu isMenuVisible={isMenuVisible}>

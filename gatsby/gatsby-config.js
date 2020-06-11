@@ -8,6 +8,7 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-styled-components`,
+    `gatsby-plugin-react-helmet`,
     {
       resolve: 'gatsby-plugin-web-font-loader',
       options: {
@@ -19,7 +20,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-s3`,
       options: {
-          bucketName: 'dummy-blog'
+        bucketName: 'blog.ni4ai.org'
       }
     },
     {
