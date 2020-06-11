@@ -10,11 +10,15 @@ This blog uses [Gatsby](https://www.gatsbyjs.org/) static site generator.
 
 Before starting, please install dependencies:
 
-    $ yarn
+```
+yarn
+```
 
-To start developing, just run:
+To start developing, run:
 
-    $ yarn start
+```
+yarn start
+```
 
 It will automatically, build the pages in develop mode and spin a webserver (usually in `http://localhost:8000/`)
 
@@ -23,12 +27,20 @@ It will automatically, build the pages in develop mode and spin a webserver (usu
 
 Before deploying the site, you need to build the project by running:
 
-    $ yarn build
+```
+yarn build
+```
 
-This will build the site inside the `public/` folder. Then, to deploy just define your AWS credentials on `l.env` file.
+This will build the site inside the `public/` folder.
 
-After that, just run:
+Then, to deploy define your AWS credentials on `l.env` file. You will define both:
+- AWS_ACCESS_KEY_ID
+- AWS_SECRET_ACCESS_KEY
 
-    $ yarn deploy
+After that, run:
+
+```
+yarn deploy
+```
 
 That will ultimately push the changes to the `S3` bucket.
