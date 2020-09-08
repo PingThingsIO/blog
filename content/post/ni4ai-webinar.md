@@ -5,7 +5,7 @@ description: This panel will introduce the ARPA-E funded NI4AI effort, built on 
 tags:
 - Conversations
 - NI4AI-events
-- NI4AI-commuinty
+- NI4AI-community
 
 
 title: NI4AI Webinar
