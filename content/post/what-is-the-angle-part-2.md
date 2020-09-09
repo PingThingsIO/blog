@@ -4,9 +4,9 @@ date: '2020-07-30T02:13:47+0000'
 description: Working with PMU Angle Data
 featuredImage: '/assets/images/post/what-is-angle-2/angle1.png'
 tags:
-- Explainers
-- Analytics
-- NI4AI-community
+- explainers
+- analytics
+- ni4ai-community
 
 title: 'What’s the Angle? (Part 2)'
 ---
