@@ -18,7 +18,7 @@ The plotter offers the following features:
 There are a few options for saving and sharing work you do in the plotter:
 - [Generate a "permalink"](#permalink) to the visual you generated
 - [Save and export images](#imageexport)
-- [Export summary statistics](#csvexport) to CSV
+<!-- - [Export summary statistics](#csvexport) to CSV  -->
 - [Export Python code](#python) to move your analysis from the Plotter into a Jupyter notebook
 
 We'll use the "Sunshine" dataset as an example. 
@@ -47,23 +47,21 @@ Once you select which streams you want to visualize, you can create a permanent 
 
 ![SAVE WORK](/assets/images/post/blog-demo-1/save-work.gif)
 
-## Three ways to save visualizations 
+## Save your plot as an image
 <a name="imageexport"></a>
-
-### Save your plot as an image
 
 You can use the plotter to zoom in on specific events or time intervals in the data. To share a visualization, you can either save the graph as an image, or copy and paste.
 
 ![SAVE IMAGE](/assets/images/post/blog-demo-1/save-as-image.gif)
 
-### Download summary statistics to a CSV
+<!-- ### Download summary statistics to a CSV
 <a name="csvexport"></a>
 
 If you would like to dig further in excel or upload into other applications, you can export data to CSV. Use “Aggregated Data” to reduce the file volume. You can control how you aggregate.
 
-![CSV](/assets/images/post/blog-demo-1/csv.gif)
+![CSV](/assets/images/post/blog-demo-1/csv.gif) -->
 
-### Transitioning your analysis to a Jupyter Notebook
+## Transition your analysis to a Jupyter Notebook
 
 <a name="python"></a>
 
