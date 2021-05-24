@@ -1,7 +1,7 @@
 ---
 date: '2021-03-21T01:00:00Z'
 description: Stream data to the platform by telling us a little about the sensor you wish to connect
-featuredImage: '/assets/images/post/onboarding/sensors.png'
+featuredImage: '/assets/images/post/default.jpg'
 tags:
 - ni4ai-data
 

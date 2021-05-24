@@ -1,7 +1,7 @@
 ---
 date: '2019-12-17T17:21:41.264251Z'
 description: Wondering where to put PMUs? Here's a guide to siting and installation
-featuredImage: '/assets/images/post/benchmarking-results/FullParallelInsert.MPPS.png'
+featuredImage: '/assets/images/post/default.jpg'
 tags:
 - explainers
 - ni4ai-data
