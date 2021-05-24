@@ -9,9 +9,9 @@ title: Sensor Onboarding
 author: laurel
 ---
 
-Interested in contributing data to NI4AI? Add your sensor to our fleet.
+Interested in contributing data to NI4AI? Start streaming your PMU data to the platform.
 
-The google form below including information we need to establish a connection with the sensor, as well as metadata that will increase the value of the data to users.
+The form below includes information we need to establish a C37 connection to any sensor, as well as metadata that will increase the value of the data to users.
 
 
-[https://docs.google.com/forms/d/e/1FAIpQLSco3LEwbzXFWAYEtWFscOrsg2HNNE6ZOJJ4M6V5bRqAAtTiEw/viewform?usp=sf_link]()
+[https://forms.gle/fDKBueywuNU2xyot6](https://forms.gle/fDKBueywuNU2xyot6)
