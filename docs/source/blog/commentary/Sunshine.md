@@ -15,7 +15,7 @@ The Google Colab workspace extension can Be downloaded [here](https://workspace.
 
 The workspace can be accessed [here.](%28%28https://drive.google.com/file/d/1DAecP25WQKm9K2LDZgu-s1x8ZKKcPloU/view?usp=sharing%29%29) 
 
-![Opening Colab](![Installing Google Colab](GifColab2.gif)
+(![Installing Google Colab](GifColab2.gif)
 ## **3. After that, install BtrDB and import the libraries needed to explore the data. Since this code is already in the Colab space so it is ready to run. Alternatively, manual instructions will follow below.**
 
  Install Better DB (BtrDB) python package, the backbone off PredictiveGrid, import other needed packages, and run code. This helps us do things like easily convert timestamps to nanoseconds.
@@ -28,9 +28,9 @@ The workspace can be accessed [here.](%28%28https://drive.google.com/file/d/1DAe
 
  - ****Head to NI4Ai.org/profile to grab your API Key. Don't forget to create a free account if you have not done so already.****
   
-![Opening Colab](![Sign In to NI4AI.org](![Pic1SignIn.png)
+(![Sign In to NI4AI.org](![Pic1SignIn.png)
 
-![Opening Colab](![Get Your API Key](![Pic2APIKey.png)
+(![Get Your API Key](![Pic2APIKey.png)
 
 
 Now, just copy and paste this API key into Google Colab, replacing the placeholder text. With your API key, you can now access all of the public datasets available on the platform!
