@@ -5,7 +5,7 @@ This post offers a brief guide to exploring the NI4AI *Sunshine* PMU data set us
     
 Installing Google Collab is the fastest way to get started using NI4AI data. Alternatively, more instructions for exploring the data is available in Pt. 2 of this post.  Google Colaboratory, or “Colab” for short, is a product from Google Research. Colab allows anybody to write and execute arbitrary python code through the browser, and is especially well suited to machine learning, data analysis and education.
 
-![Opening Colab](![Installing Google Colab](GifColab1.gif)
+![Installing Google Colab](Gif1Colab1.gif)
   
 The Google Colab workspace extension can Be downloaded [here](https://workspace.google.com/marketplace/app/colaboratory/1014160490159).
 
@@ -15,12 +15,13 @@ The Google Colab workspace extension can Be downloaded [here](https://workspace.
 
 The workspace can be accessed [here.](%28%28https://drive.google.com/file/d/1DAecP25WQKm9K2LDZgu-s1x8ZKKcPloU/view?usp=sharing%29%29) 
 
-(![Installing Google Colab](GifColab2.gif)
+![Installing Google Colab](Gif2OpenCollab.gif)
+
 ## **3. After that, install BtrDB and import the libraries needed to explore the data. Since this code is already in the Colab space so it is ready to run. Alternatively, manual instructions will follow below.**
 
  Install Better DB (BtrDB) python package, the backbone off PredictiveGrid, import other needed packages, and run code. This helps us do things like easily convert timestamps to nanoseconds.
  
-![Installing libraries](![Installing Google Colab](Gif3ImportLibraries.gif)
+![Installing Google Colab](Gif3ImportLibraries.gif)
 
 
 
@@ -28,9 +29,9 @@ The workspace can be accessed [here.](%28%28https://drive.google.com/file/d/1DAe
 
  - ****Head to NI4Ai.org/profile to grab your API Key. Don't forget to create a free account if you have not done so already.****
   
-(![Sign In to NI4AI.org](![Pic1SignIn.png)
+![Sign In to NI4AI.org](![Pic1SignIn.png) 
 
-(![Get Your API Key](![Pic2APIKey.png)
+![Get Your API Key](![Pic2APIKey.png)
 
 
 Now, just copy and paste this API key into Google Colab, replacing the placeholder text. With your API key, you can now access all of the public datasets available on the platform!
