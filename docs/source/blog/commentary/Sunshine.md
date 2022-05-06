@@ -29,9 +29,9 @@ The workspace can be accessed [here.](%28%28https://drive.google.com/file/d/1DAe
 
  - ****Head to NI4Ai.org/profile to grab your API Key. Don't forget to create a free account if you have not done so already.****
   
-![Sign In to NI4AI.org](![Pic1SignIn.png) 
+![Sign In to NI4AI.org]([Pic1SignIn.png) 
 
-![Get Your API Key](![Pic2APIKey.png)
+![Get Your API Key]([Pic2APIKey.png)
 
 
 Now, just copy and paste this API key into Google Colab, replacing the placeholder text. With your API key, you can now access all of the public datasets available on the platform!
