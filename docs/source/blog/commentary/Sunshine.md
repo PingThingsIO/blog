@@ -1,6 +1,6 @@
-This post offers a brief guide to exploring the NI4AI *Sunshine* PMU data set using PingThings software. 
+This post offers a brief guide to exploring the NI4AI *Sunshine* PMU data set using PredictiveGrid. 
 
-## **1**. **Install Google Collab Chrome Add-On and access the NI4AI Google Collab Workspace******
+## **1**. **Install Google Collab Chrome Add-On and access the NI4AI Google Collab Workspace**
 
     
 Installing Google Collab is the fastest way to get started using NI4AI data. Alternatively, more instructions for exploring the data is available in Pt. 2 of this post.  Google Colaboratory, or “Colab” for short, is a product from Google Research. Colab allows anybody to write and execute arbitrary python code through the browser, and is especially well suited to machine learning, data analysis and education.
@@ -11,7 +11,7 @@ The Google Colab workspace extension can Be downloaded [here](https://workspace.
 
 
 
-## **2. Next, access the NI4AI Google Colab Workspace pre-filled with everything you need to get started!
+## **2. Next, access the NI4AI Google Colab Workspace pre-filled with everything you need to get started!**
 
 The workspace can be accessed [here.](%28%28https://drive.google.com/file/d/1DAecP25WQKm9K2LDZgu-s1x8ZKKcPloU/view?usp=sharing%29%29) 
 
