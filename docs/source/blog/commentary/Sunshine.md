@@ -21,7 +21,7 @@ The workspace can be accessed [here.](%28%28https://drive.google.com/file/d/1DAe
 
 **3. Install BtrDB and import the libraries needed to explore the data. Since this code is already in the Colab space, it is ready to run. Alternatively, manual instructions will follow below.**
 
- Install Better DB (BtrDB) python package, the backbone off PredictiveGrid, import other needed packages, and run code. This helps us do things like easily convert timestamps to nanoseconds.
+ Install Better DB (BtrDB) python package, the backbone of PredictiveGrid, import other needed packages, and run code. This helps us do things like easily convert timestamps to nanoseconds.
  
 ![Installing Google Colab](Gif3ImportLibraries.gif)
 
