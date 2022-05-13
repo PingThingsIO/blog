@@ -1,37 +1,37 @@
 # Quickstart: Exploring The Sunshine Data Set
 
-**This post offers a brief guide to exploring the NI4AI *Sunshine* PMU data set using PredictiveGrid.* 
+**This post offers a brief guide to exploring the NI4AI *Sunshine* PMU data set using PredictiveGrid.** 
 
-**PART 1: Getting Started**
+### PART 1: Getting Started
 
 **1. Install Google Collab Chrome Add-On and access the NI4AI Google Collab Workspace.**
 
 Installing Google Collab is the fastest way to get started using NI4AI data. Alternatively, more instructions for exploring the data is available in Pt. 2 of this post.  Google Colaboratory, or “Colab” for short, is a product from Google Research. Colab allows anybody to write and execute arbitrary python code through the browser, and is especially well suited to machine learning, data analysis and education.
 
-![Installing Google Colab](Gif1Colab1.gif)
+![Installing Google Colab](sunshine/Gif1Colab1.gif)
   
 The Google Colab workspace extension can Be downloaded [here](https://workspace.google.com/marketplace/app/colaboratory/1014160490159).
 
 
- **2. Access the NI4AI Google Colab Workspace, pre-filled with everything you need to get started.**
+**2. Access the NI4AI Google Colab Workspace, pre-filled with everything you need to get started.**
 
 The workspace can be accessed [here.](%28%28https://drive.google.com/file/d/1DAecP25WQKm9K2LDZgu-s1x8ZKKcPloU/view?usp=sharing%29%29) 
 
-![Installing Google Colab](Gif2OpenCollab.gif)
+![Installing Google Colab](sunshine/Gif2OpenCollab.gif)
 
 **3. Install BtrDB and import the libraries needed to explore the data. Since this code is already in the Colab space, it is ready to run. Alternatively, manual instructions will follow below.**
 
  Install Better DB (BtrDB) python package, the backbone of PredictiveGrid, import other needed packages, and run code. This helps us do things like easily convert timestamps to nanoseconds.
  
-![Installing Google Colab](Gif3ImportLibraries.gif)
+![Installing Google Colab](sunshine/Gif3ImportLibraries.gif)
 
  **4. Retrieve your API key and replace the placeholder text in google Colab from your NI4AI profile.**
 
  Head to NI4Ai.org/profile to grab your API Key. Don't forget to create a free account if you have not done so already.
   
-![Sign In to NI4AI.org](Pic1SignIn.png) 
+![Sign In to NI4AI.org](sunshine/Pic1SignIn.png) 
 
-![Get Your API Key](Pic2APIKey.png)
+![Get Your API Key](sunshine/Pic2APIKey.png)
 
 
 Now, copy and paste this API key into Google Colab, replacing placeholder text. With your API key, you can now access all of the public datasets available on the platform!
@@ -40,7 +40,7 @@ Now, copy and paste this API key into Google Colab, replacing placeholder text. 
 Finally, follow along the instructions in Google Colab to explore the Sunshine Data Stream. Alternatively, we provide a walkthrough below exploring the *Sunshine* Data stet.
 
 
-**PART 2: Exploring The Sunshine Dataset**
+### PART 2: Exploring The Sunshine Dataset
   
  Our mission is to make it easier than ever to explore our datasets. Everything below is available in Google Colab, but we will also walk you through the process below to run on your own. 
   
