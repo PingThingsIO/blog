@@ -16,7 +16,7 @@ This page provides links for users to register, access the platform, and read do
    Register <https://ni4ai.org>
    Plotter <https://plot.ni4ai.org>
    Jupyterhub <https://jupyter.ni4ai.org>
-   Data <https://ni4ai.org/datasets>
+   Data <https://ni4ai-blog.readthedocs.io/en/latest/data/index.html>
 
 .. toctree::
    :caption: Learn More
