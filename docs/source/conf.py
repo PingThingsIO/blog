@@ -53,7 +53,7 @@ html_logo = "_static/PingThings_logo_color.png"
 html_favicon = '_static/tree.ico'
 
 html_theme_options = {
-    "collapse_navigation" : False,
+    "collapse_navigation" : True,
     "external_links": [
         {"url": "https://btrdb.readthedocs.io/en/latest/", "name": "API Docs"},
         # {"url": "https://github.com/PingThingsIO/ni4ai-notebooks/", "name": "Github"},
