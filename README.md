@@ -6,66 +6,34 @@
 
 Articles are written in markdown syntax. Here is a guide on [basic markdown syntax](https://www.markdownguide.org/basic-syntax) and here is another on [extended syntax](https://www.markdownguide.org/extended-syntax).
 
-To include Mathematic notation in the article, we use Katex, which you can read more about and [try out here](https://katex.org/#demo). 
+New articles should be archived under the appropriate directory in `docs/source/`. The blog is organized as follows:
+- `docs/source/blog` includes traditional blog posts, or commentary about the data, project or industry.
+- `docs/source/data` provides detailed documentation about open access data hosted as part of NI4AI.
+- `docs/source/learn` offers a deep dive into analytical methods used to process time series (and particularly PMU) data.
+- `docs/source/quickstart` is a one-stop-shop for new users just getting started using the platform.
+- `docs/source/tutorials` include tutorials for new users to learn / practice typical platform workflows. It covers fundamental concepts such as querying streams, working with statpoints, and deciding when to use windows, aligned_windows and values queries.
+- `docs/source/workshops` lists video recordings of workshops hosted as part of the NI4AI project.
 
-Math Equations can be added in Inline Mode by surrounding your equation with `$` characters.
+## About
 
-Example markdown:
-```
-$a^2 + b^2 = c^2$
-```
+The blog uses Sphinx and is hosted on readthedocs.io. 
 
-Math Equations in Display Mode by surrounding your equation with `$$` characters. In Display mode you can use new-lines.
+### Development
 
-Example markdown:
-```
-$$
-a^2 + b^2 = c^2
-y = m*x + b
-$$
-```
-
-# Development on `/blog`
-
-## Getting Started
-
-This blog uses [Gatsby](https://www.gatsbyjs.org/) static site generator.
-
-### Developing
-
-Before starting, please install dependencies:
+To start, navigate to the directory `blog/docs` and install dependencies:
 
 ```
-yarn
+pip install -r requirements.txt
 ```
 
-To start developing, run:
+To deploy the blog locally, you can run:
 
 ```
-yarn start
+sphinx-build source build
 ```
 
-It will automatically, build the pages in develop mode and spin a webserver (usually in `http://localhost:8000/`)
+You can view and navigate (and validate) the resulting HTML files by opening the file `docs/build/index.html`.
 
 
 ### Deploying the Site
 
-Before deploying the site, you need to build the project by running:
-
-```
-yarn build
-```
-
-This will build the site inside the `public/` folder.
-
-Then, to deploy define your AWS credentials in `.env` file. Use the `PingThings, Inc.` instance and define both:
-- AWS_ACCESS_KEY_ID
-- AWS_SECRET_ACCESS_KEY
-
-After that, run:
-
-```
-yarn deploy
-```
-
-That will ultimately push the changes to the `S3` bucket.
