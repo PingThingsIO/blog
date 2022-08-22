@@ -1,4 +1,4 @@
---
+
 # Plotter Demo
 
 Here is a short video tutorial demonstrating how to locate and navigate data using our stream visualization interface. You can follow along by visiting [plot.ni4ai.org](plot.ni4ai.org).

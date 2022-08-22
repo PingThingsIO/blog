@@ -1,4 +1,4 @@
----
+
 # PredictiveGrid Benchmarks
 
 There are many time series databases on the market at the moment and they each have their own strengths and weaknesses. Some of the differences are qualitative or can be quantified without an experiment for example "this database can scale out to a cluster" or "this database supports query X". Others need experiments run on controlled hardware in order to quantify the differences.
