@@ -8,9 +8,9 @@ This series of blog posts provides commentary designed to put the data into cont
    :caption: Learn More
    :maxdepth: 1
 
-   ./fire-season
-   ./pmu-siting-2
-   ./ekg-data
-   ./Sunshine
-   ./NASPI
-   ./Intro
+   fire-season
+   pmu-siting-2
+   ekg-data
+   Sunshine
+   NASPI
+   Intro

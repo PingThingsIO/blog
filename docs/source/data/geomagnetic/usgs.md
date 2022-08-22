@@ -1,4 +1,4 @@
---
+
 # gic/usgs
 
 The `gic/usgs` data collection provides access to streaming geomagnetic field data updated once per minute. Data streams from a network of measurement sites each streaming on four channels, reporting the magnitude of the earth’s geomagnetic field (in nanoteslas) in the North, South, and vertical directions. 

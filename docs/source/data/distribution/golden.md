@@ -1,4 +1,4 @@
---
+
 # Golden
 
 The `golden` data collection provides three months of continuous monitoring data from micro-PMUs installed during an early research deployment. Each PMU reports data at 120 frames per second on twelve channels: three-phase voltage and current, giving root-mean-square magnitude and phase angle for each.

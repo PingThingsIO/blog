@@ -1,4 +1,4 @@
----
+
 # Monitoring
 
 The `monitoring` collection includes one week of time series measurements recorded at four different power generating stations. Generators include one grid-scale solar farm and three conventional generators.

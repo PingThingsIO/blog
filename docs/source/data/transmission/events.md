@@ -1,4 +1,4 @@
----
+
 # Events
 
 The `events` collection includes measurement data recorded by transmission PMUs during various events on the transmission grid. These include a sub-synchronous wide-area oscillation, and two switching events.

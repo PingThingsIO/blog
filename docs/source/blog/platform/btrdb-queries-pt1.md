@@ -1,4 +1,4 @@
----
+
 # Memory Efficient BTrDB Queries: Part 1
 
 [The Berkeley Tree Database (BTrDB)](http://btrdb.io/) provides effective distributed storage of dense scalar-valued telemetry data. It can store data with nanosecond precision, and it supports reading and writing more than 10 million points per second per node. As a result it is an excellent tool for analyzing historical high-frequency (usually 30-240 Hz) sensor readings that produce gigabytes of data an hour.

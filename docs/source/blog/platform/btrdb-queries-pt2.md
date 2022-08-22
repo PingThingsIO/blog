@@ -1,4 +1,4 @@
----
+
 # Memory Efficient BTrDB Queries: Part 2
 
 In Part I we introduced the tree data structure and discussed the two main algorithms for traversing them: depth-first and breadth-first. It is highly recommended that you review that post if these concepts are new to you, as Part II will build on them with more complicated examples using [the Berkeley Tree Database (BTrDB)](http://btrdb.io/).
