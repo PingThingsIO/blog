@@ -9,7 +9,7 @@ Hello, welcome to the NI4AI Blog!
 
 About NI4AI
 ===========
-A National Infrastructure for AI on the Grid is an ARPA-E funded project designed to advance AI/ML for the electric grid.
+A National Infrastructure for AI on the Grid is an ARPA-E funded project designed to advance artificial intelligence and machine learning accessibility for the electric grid.
 
 **Contributors:** PingThings and UC Berkeley
 
