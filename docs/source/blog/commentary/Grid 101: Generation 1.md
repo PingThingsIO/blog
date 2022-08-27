@@ -1,6 +1,4 @@
-# Grid 101: Generation, Transmission, Distribution
-**Grid 101: Generation, Transmission, Distribution**
-
+# Grid 101: Generation 1
 While future blog posts will discuss in more detail the importance and implications of advanced sensor data, this post will aim to introduce the general grid concepts of generation, transmission, and distribution. 
 
 The grid consists of three major processes : **Generation, Transmission, and Distribution**
