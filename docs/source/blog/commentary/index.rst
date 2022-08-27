@@ -15,6 +15,8 @@ This series of blog posts provides commentary designed to put the data into cont
    NASPI
    Intro
    Grid 101: Generation 1
+   Grid 101: Generation 2
+   Grid 101: Generation 3
    Grid 101: Transmission 1
    Grid 101: Transmission 2
    Grid 101: Transmission 3
@@ -24,7 +26,7 @@ This series of blog posts provides commentary designed to put the data into cont
    Sensor Data: PMUs
    DERs
    Changing End Uses
-   NIKKO at Distributech
+   Distributech Update
    FERC and NERC: FERC
    FERC and NERC: NERC
    News: Powerside
