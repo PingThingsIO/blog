@@ -1,4 +1,4 @@
-# The Future of Sensors and Sensor Data: SCADA, PMUs, CPOW (Sensor Series Post 1)
+# Sensor Data: SCADA
 
 In our last blog series we discussed substations which are the locations where electricity may be split, controlled, and transformed. One may notice, however, that these are often--if not always-- empty. This is where supervisory control units, sensors, and automation come into play. Grid sensors and their data have evolved from SCADA, to synchrophasors and digital fault recorders, and most recently to measuring continuous point on wave data (CPOW). 
 
