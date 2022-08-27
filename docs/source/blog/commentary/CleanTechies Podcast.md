@@ -1,4 +1,5 @@
-#CleanTechies Podcast
+# CleanTechies Podcast
+
 NI4AI's PredictiveGrid is powered by PingThings big data platform. In this interview, Sean Patrick Murphy, CEO of PingThings, discusses with Silas Mahner how big data solutions unlock AI potential and unforseen use cases for the grid!
 
 
