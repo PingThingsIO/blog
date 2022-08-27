@@ -1,4 +1,4 @@
-# Grid 101: Generation, Transmission, Distribution (Part 2)
+# Grid 101: Generation 2.md
 
 **Alternating Current**
 Our grid is generally powered by *alternating current* (AC), NOT direct current (DC). At the heart of AC current generation is almost always a rotating magnet exciting the electrons of a conductive material.  AC current is generated with rotational energy for continuous generation. This rotational energy comes from a variety of sources: wind turbines and hydroelectric powered turbines are renewable sources for this rotational energy that might immediately come to mind when we think about rotational, mechanical power being converted into energy.
@@ -25,14 +25,4 @@ When  a rotating magnet excites electrons in a conductive material, those excite
 The number of full rotations is considered a **cycle**, which we measure in cycles per second with the label Hertz (Hz).![sine wave frequency hertz cycle hz](https://theengineeringmindset.com/wp-content/uploads/2018/02/sine-wave-frequency-hertz-cycle-hz.png)
 
 
-**How do we have stable, consistent power if the current fluctuates?**
-AND
-**Why do power lines have multiple wires?**
 
-The key to stable power comes from **three phase electricity,** or using three separate sets of wire conductors evenly spaced about the magnet. With this orientation, as one wire's current reduces, others increase. The three separate sources means that we always get a stable source of electricity.  This is also why we see multiple power lines running in parallel across our grid!
-
-![Three phase electricity distribution](https://theengineeringmindset.com/wp-content/uploads/2018/02/Three-phase-electricity-distribution-300x128.png)
-
-
-
-In conclusion, through evenly spacing our conductive materials around the circular turbine, we can evenly distribute the generative power between the three coils. It is always the case that as the magnetic field of our rotating magnet starts to pull away from one conductive coil, it is approaching another coil more quickly and exciting *those* electrons.  Having covered generation, we will now move to exploring how we transport this generated energy long distances. Notedly, these traditional sources are usually small in number: the common framework is a few power plants whose power is transmitted and then distributed to power most of the grid. In further posts we will explore how this system is complicated by disbursed, distributed energy resources like wind and solar generation.
