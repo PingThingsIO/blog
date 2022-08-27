@@ -1,4 +1,5 @@
 # Grid 101: Generation 3
+
 **How do we have stable, consistent power if the current fluctuates?**
 AND
 **Why do power lines have multiple wires?**
