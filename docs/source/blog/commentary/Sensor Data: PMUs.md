@@ -1,5 +1,5 @@
 
-# Synchrophasors and PMUs (Sensor Series pt 2)
+# Sensor Data: PMUs
 
 Synchrophasor technology is used to understand wide area grid health. First used in the early 2000s, synchrophasors vastly improved our ability to monitor electricity flowing throughout the grid. The AC electricity that flows across the grid can be represented with a sine wave (sinusoid) that does its best to represent an analogue signal, similarly to the way a microphone records an analogue sound and represents it with a digital approximation. The synchrophasor does this by doing the best it can with the data available via *fitting a line to the data,* in this case called a called a sinusoid approximation. 
 
