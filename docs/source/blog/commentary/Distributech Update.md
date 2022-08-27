@@ -1,6 +1,6 @@
 #Distributech Update
 
-This blog post is a q and a with Nikko on the team that creates the PredictiveGrid software powering NI4AI.
+This blog post is a 'Q&A' with Nikko on the team that creates the PredictiveGrid software powering NI4AI.
 
 Distributech is the leading annual transmission and distribution event for utilities, technology providers, and industry leaders. This conference is at the cutting edge of new technology, showcasing the newest developments in automation and control, energy efficiency, demand response, DER integration, metering, cybersecurity, and T&D operation and relaibility. 
 
