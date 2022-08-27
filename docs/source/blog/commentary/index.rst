@@ -14,3 +14,4 @@ This series of blog posts provides commentary designed to put the data into cont
    Sunshine
    NASPI
    Intro
+   Grid 101: Generation 1
