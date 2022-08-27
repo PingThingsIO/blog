@@ -1,4 +1,4 @@
-# Grid 101: Generation 2.md
+# Grid 101: Generation 2
 
 **Alternating Current**
 Our grid is generally powered by *alternating current* (AC), NOT direct current (DC). At the heart of AC current generation is almost always a rotating magnet exciting the electrons of a conductive material.  AC current is generated with rotational energy for continuous generation. This rotational energy comes from a variety of sources: wind turbines and hydroelectric powered turbines are renewable sources for this rotational energy that might immediately come to mind when we think about rotational, mechanical power being converted into energy.
