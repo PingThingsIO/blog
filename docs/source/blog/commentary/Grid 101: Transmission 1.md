@@ -1,5 +1,4 @@
-# Grid 101: Generation, Transmission, Distribution (Blog Post 3) Transmission and Transformers
-
+# Grid 101: Transmission 1
 While we may think that the power lines that provide the backdrop scenery to any modern city are uniform, there is a major difference between those that support electricity *transmission* and those that are used for *distribution*.  For starters, transmission lines are generally much, much larger, while distribution lines are what we are used to seeing lining our city streets on wooden poles. But what else differentiates the two? 
 
 **What is the difference between transmission lines and distribution lines on the energy grid?**
